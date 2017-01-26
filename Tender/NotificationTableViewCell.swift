@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol NotificationButtonDelegate {
+    func upperOptionTapped(cell:NotificationTableViewCell)
+    func lowerOptionTapped(cell:NotificationTableViewCell)
+}
+
 enum NotificationType{
     case request
     case finish
@@ -17,6 +22,8 @@ enum NotificationType{
 
 class NotificationTableViewCell: UITableViewCell {
 
+    var notificationDelegate:NotificationButtonDelegate?
+    
     var upperOption:UIButton = UIButton()
     var lowerOption:UIButton = UIButton()
     var detailText:UILabel = UILabel()
@@ -116,6 +123,14 @@ class NotificationTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
+    }
+    
+    func upperOptionTapped(){
+        notificationDelegate?.upperOptionTapped(cell: self)
+    }
+    
+    func lowerOptionTapped(){
+        notificationDelegate?.lowerOptionTapped(cell: self)
     }
     
 }

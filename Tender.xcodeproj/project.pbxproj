@@ -59,6 +59,9 @@
 		9EA6F19D1E394CCD00461C12 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F19C1E394CCD00461C12 /* AlertViewController.swift */; };
 		9EA6F19F1E39804600461C12 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F19E1E39804600461C12 /* ChatViewController.swift */; };
 		9EA6F1A11E39C1BD00461C12 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A01E39C1BD00461C12 /* CategoryTableViewController.swift */; };
+		9EA6F1A41E39CEE600461C12 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A31E39CEE600461C12 /* Item.swift */; };
+		9EA6F1A61E39CEF000461C12 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A51E39CEF000461C12 /* User.swift */; };
+		9EA6F1A81E39CF0100461C12 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A71E39CF0100461C12 /* Message.swift */; };
 		AFA20176EE00A0A76961440E /* Pods_TenderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A128F898521FA6A0447E23AC /* Pods_TenderUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +144,9 @@
 		9EA6F19C1E394CCD00461C12 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		9EA6F19E1E39804600461C12 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		9EA6F1A01E39C1BD00461C12 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
+		9EA6F1A31E39CEE600461C12 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		9EA6F1A51E39CEF000461C12 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9EA6F1A71E39CF0100461C12 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A128F898521FA6A0447E23AC /* Pods_TenderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TenderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A649638C141D2BB5175BDC /* Pods-Tender.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tender.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tender/Pods-Tender.release.xcconfig"; sourceTree = "<group>"; };
 		B2D69130575A0D397A2C0C90 /* Pods-TenderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TenderTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TenderTests/Pods-TenderTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 		9E6DF9BC1E37208100974A59 /* Tender */ = {
 			isa = PBXGroup;
 			children = (
+				9EA6F1A21E39CEC600461C12 /* Data */,
 				9E6DFA1A1E37224B00974A59 /* Resources */,
 				9E6DF9F51E37210B00974A59 /* Cells */,
 				9E6DF9EE1E3720AE00974A59 /* Controllers */,
@@ -316,6 +323,16 @@
 				9E6DFA191E37224800974A59 /* Gotham-ThinItalic.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		9EA6F1A21E39CEC600461C12 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				9EA6F1A31E39CEE600461C12 /* Item.swift */,
+				9EA6F1A51E39CEF000461C12 /* User.swift */,
+				9EA6F1A71E39CF0100461C12 /* Message.swift */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -633,10 +650,12 @@
 			files = (
 				9E6DF9F41E37210300974A59 /* HomeTableViewController.swift in Sources */,
 				9E6DFA451E372FBB00974A59 /* ProfileTableViewCell.swift in Sources */,
+				9EA6F1A41E39CEE600461C12 /* Item.swift in Sources */,
 				9EA6F1981E387CC400461C12 /* NotificationTableViewCell.swift in Sources */,
 				9EA6F1A11E39C1BD00461C12 /* CategoryTableViewController.swift in Sources */,
 				9E6DF9F81E37212C00974A59 /* ItemTableViewCell.swift in Sources */,
 				9E6DF9BE1E37208100974A59 /* AppDelegate.swift in Sources */,
+				9EA6F1A81E39CF0100461C12 /* Message.swift in Sources */,
 				9EA6F1911E38537200461C12 /* PostViewController.swift in Sources */,
 				9EA6F1841E37C2E500461C12 /* ProfileViewController.swift in Sources */,
 				9EA6F1951E387C8800461C12 /* NotificationTableViewController.swift in Sources */,
@@ -644,6 +663,7 @@
 				9E6DFA3E1E372A8F00974A59 /* PostDetailTableViewController.swift in Sources */,
 				9EA6F1931E38761F00461C12 /* SegmentTableViewController.swift in Sources */,
 				9E6DF9FE1E37215900974A59 /* CategoryTableViewCell.swift in Sources */,
+				9EA6F1A61E39CEF000461C12 /* User.swift in Sources */,
 				9EA6F19D1E394CCD00461C12 /* AlertViewController.swift in Sources */,
 				9EA6F19F1E39804600461C12 /* ChatViewController.swift in Sources */,
 				9E6DFA421E372C0600974A59 /* PostTableViewCell.swift in Sources */,

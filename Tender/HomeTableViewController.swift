@@ -30,6 +30,11 @@ class HomeTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    @IBAction func addService(_ sender: Any) {
+        let vc = fetchViewControllerFromMain(withIdentifier: "Post")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -73,10 +78,13 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-        
-        let vc = storyBoard.instantiateViewController(withIdentifier: "ServiceDetail")
-        self.navigationController?.pushViewController(vc, animated: true)
+        if indexPath.section == 0 {
+            let vc = CategoryTableViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            let vc = fetchViewControllerFromMain(withIdentifier: "ServiceDetail")
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 }
@@ -94,5 +102,11 @@ extension UITableViewController{
         headerView.addSubview(label)
         headerView.backgroundColor = UIColor.white
         return headerView
+    }
+    
+    func fetchViewControllerFromMain(withIdentifier:String) -> UIViewController{
+        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: withIdentifier)
+        return vc
     }
 }

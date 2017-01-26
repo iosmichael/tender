@@ -10,17 +10,17 @@ import UIKit
 import JSQMessagesViewController
 import ChameleonFramework
 
-struct User{
+struct UserTest{
     let id: String
     let name: String
 }
 
 class ChatViewController: JSQMessagesViewController {
 
-    let user1 = User(id:"1", name:"Steve")
-    let user2 = User(id:"2", name:"Tim Cook")
+    let user1 = UserTest(id:"1", name:"Steve")
+    let user2 = UserTest(id:"2", name:"Tim Cook")
     
-    var currentUser:User {
+    var currentUser:UserTest {
         return user1
     }
     var messages = [JSQMessage]()

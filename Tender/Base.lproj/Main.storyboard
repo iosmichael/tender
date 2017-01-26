@@ -24,7 +24,7 @@
         <!--Post Detail Table View Controller-->
         <scene sceneID="rfm-pM-7Jk">
             <objects>
-                <tableViewController id="Frv-lS-w64" customClass="PostDetailTableViewController" customModule="Tender" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PostDetail" id="Frv-lS-w64" customClass="PostDetailTableViewController" customModule="Tender" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="X4q-lK-vRB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -159,6 +159,9 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="heD-7E-3ae"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="tableView" destination="rVL-X3-fGb" id="p30-lt-Hp1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3E4-ay-KqV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -167,7 +170,7 @@
         <!--Chat View Controller-->
         <scene sceneID="shk-Rs-GSp">
             <objects>
-                <viewController id="4AL-Iu-iLu" customClass="ChatViewController" customModule="Tender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Chat" hidesBottomBarWhenPushed="YES" id="4AL-Iu-iLu" customClass="ChatViewController" customModule="Tender" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JCd-mC-07p"/>
                         <viewControllerLayoutGuide type="bottom" id="eBe-gi-Rfx"/>
@@ -177,6 +180,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cfu-UL-cen" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -332,7 +336,13 @@
                             <outlet property="delegate" destination="Tha-Gh-aVd" id="OgF-CW-cxh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tender" id="kDK-bO-W27"/>
+                    <navigationItem key="navigationItem" title="Tender" id="kDK-bO-W27">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="U4R-CS-4JR">
+                            <connections>
+                                <action selector="addService:" destination="Tha-Gh-aVd" id="x7B-3m-qrt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IEm-fr-kj6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -359,7 +369,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Hg3-Wg-X0Z">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="V5q-UY-3aC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Post" automaticallyAdjustsScrollViewInsets="NO" id="V5q-UY-3aC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="EiH-DG-gWk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
