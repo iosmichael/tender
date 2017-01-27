@@ -64,7 +64,7 @@ class ChatViewController: JSQMessagesViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         let message = messages[indexPath.row]
         if currentUser.id != message.senderId {
-            return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage.init(named: "blank"), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage.init(named: "profile-test"), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
         }else{
             return nil
         }

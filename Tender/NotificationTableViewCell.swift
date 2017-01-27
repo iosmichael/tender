@@ -65,10 +65,12 @@ class NotificationTableViewCell: UITableViewCell {
         let upperOptionLayout:CGRect = CGRect.init(x: leftMargin+labelWidth+topMargin+avatarSize+10, y: topMargin, width: smallSquare, height: smallSquare)
         let lowerOptionLayout:CGRect = CGRect.init(x: leftMargin+labelWidth+topMargin+avatarSize+10, y: topMargin+smallSquare+upperLowerGap, width: smallSquare, height: smallSquare)
         avatar.frame = avatarLayout
-        avatar.setImage(UIImage.init(named: "blank"), for: .normal)
+        avatar.setImage(UIImage.init(named: "profile-test"), for: .normal)
         
         upperOption.frame = upperOptionLayout
         lowerOption.frame = lowerOptionLayout
+        upperOption.addTarget(self, action: #selector(upperOptionTapped), for: .touchUpInside)
+        lowerOption.addTarget(self, action: #selector(lowerOptionTapped), for: .touchUpInside)
         switch type {
         case .request:
             requestText = whom + " has asked you for help with " + service

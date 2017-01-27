@@ -82,7 +82,7 @@ class HomeTableViewController: UITableViewController {
             let vc = CategoryTableViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
-            let vc = fetchViewControllerFromMain(withIdentifier: "ServiceDetail")
+            let vc = fetchViewControllerFromMain(withIdentifier: "Service")
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

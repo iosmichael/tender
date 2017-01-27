@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, SegmentTableDelegate{
 
+    @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var segment: UISegmentedControl!
     var currentViewController: UIViewController?
@@ -18,20 +19,27 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupThumbnailShadow()
         self.segment.selectedSegmentIndex = 0
         priorSegmentIndex = 0
         let serviceController = SegmentTableViewController()
+        serviceController.segmentDelegate = self
         let ongoingController = SegmentTableViewController()
+        ongoingController.segmentDelegate = self
         let completeController = SegmentTableViewController()
+        completeController.segmentDelegate = self
         allViewControllers = [serviceController,ongoingController,completeController]
         self.cycleFromViewController(oldVC: self.currentViewController, newVC: self.allViewControllers![priorSegmentIndex!], dir: true)
         self.segment.addTarget(self, action: #selector(indexDidChangeForSegmentedControl(sender:)), for: .valueChanged)
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func setupThumbnailShadow() {
+        thumbnail.layer.shadowColor = UIColor.flatBlack().cgColor
+        thumbnail.layer.shadowOpacity = 1
+        thumbnail.layer.shadowOffset = CGSize.zero
+        thumbnail.layer.shadowRadius = 2
+        thumbnail.layer.shouldRasterize = true
     }
     
     func cycleFromViewController(oldVC: UIViewController?, newVC: UIViewController, dir: Bool){
@@ -80,6 +88,10 @@ class ProfileViewController: UIViewController {
             self.cycleFromViewController(oldVC: self.currentViewController, newVC: incomingVC!, dir: direction)
         }
         priorSegmentIndex = index
+    }
+    
+    func displayViewController(vc: UIViewController) {
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     /*
     // MARK: - Navigation

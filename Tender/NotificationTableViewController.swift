@@ -22,15 +22,11 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
         presenter.transitionType = TransitionType.coverHorizontalFromRight
         return presenter
     }()
-
-    
-    var alertController = Presentr.alertViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: "NotiCell")
         self.tableView.separatorStyle = .none
-        setupAlertController()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -39,6 +35,12 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    @IBAction func transferPop(_ sender: Any) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Transfer")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -87,45 +89,42 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
     func upperOptionTapped(cell: NotificationTableViewCell) {
         let indexPath = tableView.indexPath(for: cell)
         let (whom, service, type) = tableStructure[(indexPath?.row)!]
-        
+        alertStyle()
     }
     
     func lowerOptionTapped(cell: NotificationTableViewCell) {
         let indexPath = tableView.indexPath(for: cell)
         let (whom, service, type) = tableStructure[(indexPath?.row)!]
-        
+        alertStyle()
     }
 }
 
 extension NotificationTableViewController{
-    func setupAlertController(){
-        alertController.titleText = "Are you sure? ⚠️"
-        alertController.bodyText = "This action can't be undone!"
-        alertController.addAction(AlertAction(title: "NO, SORRY! 😱", style: .cancel) { alert in
-            print("CANCEL!!")
-        })
-        alertController.addAction(AlertAction(title: "DO IT! 🤘", style: .destructive) { alert in
-            print("OK!!")
-        })
+    
+    func customAlertController() -> UIAlertController{
+        let alert = UIAlertController.init(title: "Lorem ipsum", message: "Lorem ipsum dolor sit amet, no vix nemore fierent.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        return alert
     }
     
     func alertStyle(){
         let customPresenter: Presentr = {
-            let width = ModalSize.full
+            let width = ModalSize.fluid(percentage: 0.50)
             //let height = ModalSize.custom(size: 150)
             let height = ModalSize.fluid(percentage: 0.20)
             let center = ModalCenterPosition.customOrigin(origin: CGPoint(x: 0, y: 0))
             let customType = PresentationType.custom(width: width, height: height, center: center)
-            
             let customPresenter = Presentr(presentationType: customType)
             customPresenter.transitionType = .coverVerticalFromTop
-            customPresenter.dismissTransitionType = .coverVerticalFromTop
+            customPresenter.dismissTransitionType = .crossDissolve
             customPresenter.roundCorners = false
-            customPresenter.backgroundColor = UIColor.flatBlack()
-            customPresenter.backgroundOpacity = 0.5
+            //customPresenter.backgroundColor = UIColor.flatWhite()
+            //customPresenter.backgroundOpacity = 0.5
             return customPresenter
         }()
-        customPresentViewController(customPresenter, viewController: alertController, animated: true, completion: nil)
+        let alert = customAlertController()
+        customPresentViewController(customPresenter, viewController: alert, animated: true, completion: nil)
     }
 }
 
