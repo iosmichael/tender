@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostDetailTableViewController: UITableViewController {
+class PostDetailTableViewController: UITableViewController, PostCellProtocol {
 
     enum cellType {
         case credits
@@ -34,6 +34,7 @@ class PostDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
         self.tableView.separatorStyle = .none
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -125,5 +126,34 @@ class PostDetailTableViewController: UITableViewController {
         }
     }
 
-
+    func addCredit(cell: PostTableViewCell) {
+        
+    }
+    
+    func deleteCredit(cell: PostTableViewCell) {
+        
+    }
+    
+    func addPoint(label: String) {
+        
+    }
+    
+    func deletePoint(cell: PostTableViewCell) {
+        
+    }
+    
+    @IBAction func doneBtnPressed(_ sender: Any) {
+        print("Done Btn Pressed")
+        ServiceManager().postService(service:sampleData())
+    }
+        
+    func sampleData()->Service{
+        let service = Service()
+        service.category = "Creative Work"
+        service.title = "Photoshop"
+        service.credits = "20"
+        service.skills = ["photoshop","web design", "video editing"]
+        return service
+    }
+    
 }

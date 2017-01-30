@@ -12,15 +12,11 @@ class ItemTableViewCell: UITableViewCell {
 
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var provider: UILabel!
-    @IBOutlet weak var labelTag: UILabel!
     @IBOutlet weak var labelDate: UILabel!
-    @IBOutlet weak var labelCredit: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.labelCredit.layer.cornerRadius = 5
-        self.labelTag.layer.cornerRadius = 3
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

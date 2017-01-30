@@ -11,6 +11,7 @@ import UIKit
 protocol NotificationButtonDelegate {
     func upperOptionTapped(cell:NotificationTableViewCell)
     func lowerOptionTapped(cell:NotificationTableViewCell)
+    func thumbnailTapped(cell:NotificationTableViewCell)
 }
 
 enum NotificationType{
@@ -66,6 +67,7 @@ class NotificationTableViewCell: UITableViewCell {
         let lowerOptionLayout:CGRect = CGRect.init(x: leftMargin+labelWidth+topMargin+avatarSize+10, y: topMargin+smallSquare+upperLowerGap, width: smallSquare, height: smallSquare)
         avatar.frame = avatarLayout
         avatar.setImage(UIImage.init(named: "profile-test"), for: .normal)
+        avatar.addTarget(self, action: #selector(thumbnailTapped), for: .touchUpInside)
         
         upperOption.frame = upperOptionLayout
         lowerOption.frame = lowerOptionLayout
@@ -133,6 +135,10 @@ class NotificationTableViewCell: UITableViewCell {
     
     func lowerOptionTapped(){
         notificationDelegate?.lowerOptionTapped(cell: self)
+    }
+    
+    func thumbnailTapped(){
+        notificationDelegate?.thumbnailTapped(cell: self)
     }
     
 }

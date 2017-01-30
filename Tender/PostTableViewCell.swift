@@ -9,8 +9,14 @@
 import UIKit
 
 protocol PostCellProtocol {
-    func addBtn(label:String)
-    func deleteBtn(cell:PostTableViewCell)
+    //add credit action
+    func addCredit(cell:PostTableViewCell)
+    //delete credit action
+    func deleteCredit(cell:PostTableViewCell)
+    //add point from skill btn
+    func addPoint(label:String)
+    //delete point from skill btn
+    func deletePoint(cell:PostTableViewCell)
 }
 
 class PostTableViewCell: UITableViewCell {
@@ -59,17 +65,18 @@ class PostTableViewCell: UITableViewCell {
         //left imgBtn layout
         let imgBtn:CGRect = CGRect.init(x: leftMargin, y: topMargin, width: largeSquare, height: largeSquare)
         //right btn layout
-        let textBtn:CGRect = CGRect.init(x: leftMargin+largeSquare+10, y: topMargin, width: 100, height: largeSquare)
+        let textBtn:CGRect = CGRect.init(x: leftMargin+largeSquare+5, y: topMargin, width: 70, height: largeSquare)
         //imageBtn Settings
         imageButton.frame = imgBtn
         imageButton.setImage(UIImage.init(named: "bigPlus"), for: .normal)
-        imageButton.addTarget(self, action: #selector(deleteClick), for: .touchUpInside)
+        imageButton.addTarget(self, action: #selector(addCredit), for: .touchUpInside)
         //textBtn Settings
         textButton.frame = textBtn
         textButton.titleLabel?.textAlignment = .left
         textButton.titleLabel?.font = gothamMediumExtraLarge
+        textButton.setTitleColor(UIColor.flatBlack(), for: .normal)
         textButton.setTitle(inputStr, for: .normal)
-        textButton.addTarget(self, action: #selector(addClick), for: .touchUpInside)
+        textButton.addTarget(self, action: #selector(deleteCredit), for: .touchUpInside)
         setNeedsLayout()
     }
     
@@ -122,6 +129,7 @@ class PostTableViewCell: UITableViewCell {
         imageButton.frame = imgBtn
         imageButton.setImage(UIImage.init(named: "plus"), for: .normal)
         //add image Btn action
+        imageButton.addTarget(self, action: #selector(addPoint), for: .touchUpInside)
         inputText.frame = textBtn
         inputText.font = gothamMediumFont
         inputText.placeholder = labelStr
@@ -136,9 +144,11 @@ class PostTableViewCell: UITableViewCell {
         imageButton.frame = imgBtn
         imageButton.setImage(UIImage.init(named: "minus"), for: .normal)
         //add image Btn action
-        textLabel?.frame = textBtn
-        textLabel?.font = gothamMediumFont
-        textLabel?.text = labelStr
+        imageButton.addTarget(self, action: #selector(deletePoint), for: .touchUpInside)
+        labelText.frame = textBtn
+        //frame doesnt get set!!!
+        labelText.font = gothamMediumFont
+        labelText.text = labelStr
         setNeedsLayout()
     }
     
@@ -159,15 +169,23 @@ class PostTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func addClick(){
+    func addCredit(){
+        delegate?.addCredit(cell: self)
+    }
+    
+    func deleteCredit(){
+        delegate?.deleteCredit(cell: self)
+    }
+    
+    func addPoint(){
         if ((inputText.text?.isEmpty)!){
             return
         }
-        delegate?.addBtn(label:inputText.text!)
+        delegate?.addPoint(label:inputText.text!)
     }
     
-    func deleteClick(){
-        delegate?.deleteBtn(cell: self)
+    func deletePoint(){
+        delegate?.deletePoint(cell: self)
     }
 
 }

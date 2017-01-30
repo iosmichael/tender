@@ -8,6 +8,16 @@ target 'Tender' do
   pod 'JSQMessagesViewController'
   pod 'Presentr'
   pod 'DZNEmptyDataSet'
+  #Firebase Core Method / Firebase Config
+  pod 'Firebase/Core'
+  #Google Sign-In
+  pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
+  #Firebase Database
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
+  #Firebase Messaging
+  pod 'Firebase/Messaging'
   # Pods for Tender
 
   target 'TenderTests' do

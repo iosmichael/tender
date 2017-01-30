@@ -18,8 +18,6 @@
 		9E6DF9F41E37210300974A59 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6DF9F31E37210300974A59 /* HomeTableViewController.swift */; };
 		9E6DF9F81E37212C00974A59 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6DF9F61E37212C00974A59 /* ItemTableViewCell.swift */; };
 		9E6DF9F91E37212C00974A59 /* ItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DF9F71E37212C00974A59 /* ItemTableViewCell.xib */; };
-		9E6DF9FE1E37215900974A59 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6DF9FC1E37215900974A59 /* CategoryTableViewCell.swift */; };
-		9E6DF9FF1E37215900974A59 /* CategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DF9FD1E37215900974A59 /* CategoryTableViewCell.xib */; };
 		9E6DFA1B1E37227000974A59 /* Gotham-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DFA001E37224800974A59 /* Gotham-Black.otf */; };
 		9E6DFA1C1E37227000974A59 /* Gotham-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DFA011E37224800974A59 /* Gotham-Black.ttf */; };
 		9E6DFA1D1E37227000974A59 /* Gotham-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DFA021E37224800974A59 /* Gotham-BlackItalic.otf */; };
@@ -50,6 +48,14 @@
 		9E6DFA421E372C0600974A59 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6DFA411E372C0600974A59 /* PostTableViewCell.swift */; };
 		9E6DFA451E372FBB00974A59 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6DFA431E372FBB00974A59 /* ProfileTableViewCell.swift */; };
 		9E6DFA461E372FBB00974A59 /* ProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DFA441E372FBB00974A59 /* ProfileTableViewCell.xib */; };
+		9E914D451E3BFF94008558B0 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E914D441E3BFF94008558B0 /* FriendViewController.swift */; };
+		9E914D471E3C2CC5008558B0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E914D461E3C2CC5008558B0 /* GoogleService-Info.plist */; };
+		9E914D491E3C7450008558B0 /* TransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E914D481E3C7450008558B0 /* TransactionManager.swift */; };
+		9E914D4B1E3C7627008558B0 /* CreditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E914D4A1E3C7627008558B0 /* CreditManager.swift */; };
+		9E914D4D1E3C7923008558B0 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E914D4C1E3C7923008558B0 /* Service.swift */; };
+		9E914D4F1E3C7938008558B0 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E914D4E1E3C7938008558B0 /* ServiceManager.swift */; };
+		9E914D511E3C8327008558B0 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E914D501E3C8327008558B0 /* History.swift */; };
+		9E914D531E3ED6E0008558B0 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E914D521E3ED6E0008558B0 /* CategoryTableViewCell.swift */; };
 		9EA6F1841E37C2E500461C12 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1831E37C2E500461C12 /* ProfileViewController.swift */; };
 		9EA6F1911E38537200461C12 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1901E38537200461C12 /* PostViewController.swift */; };
 		9EA6F1931E38761F00461C12 /* SegmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1921E38761F00461C12 /* SegmentTableViewController.swift */; };
@@ -57,7 +63,6 @@
 		9EA6F1981E387CC400461C12 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1961E387CC400461C12 /* NotificationTableViewCell.swift */; };
 		9EA6F19F1E39804600461C12 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F19E1E39804600461C12 /* ChatViewController.swift */; };
 		9EA6F1A11E39C1BD00461C12 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A01E39C1BD00461C12 /* CategoryTableViewController.swift */; };
-		9EA6F1A41E39CEE600461C12 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A31E39CEE600461C12 /* Item.swift */; };
 		9EA6F1A61E39CEF000461C12 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A51E39CEF000461C12 /* User.swift */; };
 		9EA6F1A81E39CF0100461C12 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A71E39CF0100461C12 /* Message.swift */; };
 		9EA6F1AB1E3A5F9700461C12 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1A91E3A5F9700461C12 /* HistoryTableViewCell.swift */; };
@@ -69,6 +74,9 @@
 		9EA6F1B61E3B052E00461C12 /* TransferPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1B51E3B052E00461C12 /* TransferPostViewController.swift */; };
 		9EA6F1B81E3B121100461C12 /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1B71E3B121100461C12 /* HistoryTableViewController.swift */; };
 		9EA6F1BA1E3B18F000461C12 /* Test.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EA6F1B91E3B18F000461C12 /* Test.xcassets */; };
+		9EA6F1BF1E3B1E4300461C12 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1BE1E3B1E4300461C12 /* UserManager.swift */; };
+		9EA6F1C11E3B1E5B00461C12 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1C01E3B1E5B00461C12 /* MessageManager.swift */; };
+		9EA6F1C31E3B293D00461C12 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA6F1C21E3B293D00461C12 /* Transaction.swift */; };
 		AFA20176EE00A0A76961440E /* Pods_TenderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A128F898521FA6A0447E23AC /* Pods_TenderUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -110,8 +118,6 @@
 		9E6DF9F31E37210300974A59 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		9E6DF9F61E37212C00974A59 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		9E6DF9F71E37212C00974A59 /* ItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemTableViewCell.xib; sourceTree = "<group>"; };
-		9E6DF9FC1E37215900974A59 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
-		9E6DF9FD1E37215900974A59 /* CategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryTableViewCell.xib; sourceTree = "<group>"; };
 		9E6DFA001E37224800974A59 /* Gotham-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Black.otf"; path = "Font/Gotham-Black.otf"; sourceTree = "<group>"; };
 		9E6DFA011E37224800974A59 /* Gotham-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Black.ttf"; path = "Font/Gotham-Black.ttf"; sourceTree = "<group>"; };
 		9E6DFA021E37224800974A59 /* Gotham-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-BlackItalic.otf"; path = "Font/Gotham-BlackItalic.otf"; sourceTree = "<group>"; };
@@ -142,6 +148,14 @@
 		9E6DFA411E372C0600974A59 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		9E6DFA431E372FBB00974A59 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		9E6DFA441E372FBB00974A59 /* ProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableViewCell.xib; sourceTree = "<group>"; };
+		9E914D441E3BFF94008558B0 /* FriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
+		9E914D461E3C2CC5008558B0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Tender/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9E914D481E3C7450008558B0 /* TransactionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionManager.swift; sourceTree = "<group>"; };
+		9E914D4A1E3C7627008558B0 /* CreditManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditManager.swift; sourceTree = "<group>"; };
+		9E914D4C1E3C7923008558B0 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		9E914D4E1E3C7938008558B0 /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		9E914D501E3C8327008558B0 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		9E914D521E3ED6E0008558B0 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		9EA6F1831E37C2E500461C12 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9EA6F1901E38537200461C12 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		9EA6F1921E38761F00461C12 /* SegmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentTableViewController.swift; sourceTree = "<group>"; };
@@ -149,7 +163,6 @@
 		9EA6F1961E387CC400461C12 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		9EA6F19E1E39804600461C12 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		9EA6F1A01E39C1BD00461C12 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
-		9EA6F1A31E39CEE600461C12 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		9EA6F1A51E39CEF000461C12 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9EA6F1A71E39CF0100461C12 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		9EA6F1A91E3A5F9700461C12 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -161,6 +174,9 @@
 		9EA6F1B51E3B052E00461C12 /* TransferPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferPostViewController.swift; sourceTree = "<group>"; };
 		9EA6F1B71E3B121100461C12 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
 		9EA6F1B91E3B18F000461C12 /* Test.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Test.xcassets; sourceTree = "<group>"; };
+		9EA6F1BE1E3B1E4300461C12 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		9EA6F1C01E3B1E5B00461C12 /* MessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
+		9EA6F1C21E3B293D00461C12 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		A128F898521FA6A0447E23AC /* Pods_TenderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TenderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A649638C141D2BB5175BDC /* Pods-Tender.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tender.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tender/Pods-Tender.release.xcconfig"; sourceTree = "<group>"; };
 		B2D69130575A0D397A2C0C90 /* Pods-TenderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TenderTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TenderTests/Pods-TenderTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -221,6 +237,7 @@
 		9E6DF9B11E37208000974A59 = {
 			isa = PBXGroup;
 			children = (
+				9E914D461E3C2CC5008558B0 /* GoogleService-Info.plist */,
 				9E6DF9BC1E37208100974A59 /* Tender */,
 				9E6DF9D31E37208100974A59 /* TenderTests */,
 				9E6DF9DE1E37208100974A59 /* TenderUITests */,
@@ -243,12 +260,13 @@
 		9E6DF9BC1E37208100974A59 /* Tender */ = {
 			isa = PBXGroup;
 			children = (
+				9EA6F1BB1E3B1E1700461C12 /* DataManager */,
 				9EA6F1A21E39CEC600461C12 /* Data */,
 				9E6DFA1A1E37224B00974A59 /* Resources */,
 				9E6DF9F51E37210B00974A59 /* Cells */,
 				9E6DF9EE1E3720AE00974A59 /* Controllers */,
-				9E6DF9BD1E37208100974A59 /* AppDelegate.swift */,
 				9E6DF9C31E37208100974A59 /* Main.storyboard */,
+				9E6DF9BD1E37208100974A59 /* AppDelegate.swift */,
 				9E6DF9C61E37208100974A59 /* Assets.xcassets */,
 				9E6DF9C81E37208100974A59 /* LaunchScreen.storyboard */,
 				9E6DF9CB1E37208100974A59 /* Info.plist */,
@@ -290,6 +308,7 @@
 				9EA6F1B31E3AF3E100461C12 /* TransferViewController.swift */,
 				9EA6F1B51E3B052E00461C12 /* TransferPostViewController.swift */,
 				9EA6F1B71E3B121100461C12 /* HistoryTableViewController.swift */,
+				9E914D441E3BFF94008558B0 /* FriendViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -299,8 +318,6 @@
 			children = (
 				9E6DF9F61E37212C00974A59 /* ItemTableViewCell.swift */,
 				9E6DF9F71E37212C00974A59 /* ItemTableViewCell.xib */,
-				9E6DF9FC1E37215900974A59 /* CategoryTableViewCell.swift */,
-				9E6DF9FD1E37215900974A59 /* CategoryTableViewCell.xib */,
 				9E6DFA411E372C0600974A59 /* PostTableViewCell.swift */,
 				9E6DFA431E372FBB00974A59 /* ProfileTableViewCell.swift */,
 				9E6DFA441E372FBB00974A59 /* ProfileTableViewCell.xib */,
@@ -309,6 +326,7 @@
 				9EA6F1AA1E3A5F9700461C12 /* HistoryTableViewCell.xib */,
 				9EA6F1AD1E3A6B3800461C12 /* LargeCategoryTableViewCell.swift */,
 				9EA6F1AE1E3A6B3800461C12 /* LargeCategoryTableViewCell.xib */,
+				9E914D521E3ED6E0008558B0 /* CategoryTableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -349,11 +367,25 @@
 		9EA6F1A21E39CEC600461C12 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				9EA6F1A31E39CEE600461C12 /* Item.swift */,
 				9EA6F1A51E39CEF000461C12 /* User.swift */,
 				9EA6F1A71E39CF0100461C12 /* Message.swift */,
+				9EA6F1C21E3B293D00461C12 /* Transaction.swift */,
+				9E914D4C1E3C7923008558B0 /* Service.swift */,
+				9E914D501E3C8327008558B0 /* History.swift */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		9EA6F1BB1E3B1E1700461C12 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				9EA6F1BE1E3B1E4300461C12 /* UserManager.swift */,
+				9EA6F1C01E3B1E5B00461C12 /* MessageManager.swift */,
+				9E914D481E3C7450008558B0 /* TransactionManager.swift */,
+				9E914D4A1E3C7627008558B0 /* CreditManager.swift */,
+				9E914D4E1E3C7938008558B0 /* ServiceManager.swift */,
+			);
+			name = DataManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,6 +526,7 @@
 				9E6DFA281E37227000974A59 /* Gotham-Light.ttf in Resources */,
 				9E6DFA291E37227000974A59 /* Gotham-LightItalic.otf in Resources */,
 				9E6DFA2A1E37227000974A59 /* Gotham-LightItalic.ttf in Resources */,
+				9E914D471E3C2CC5008558B0 /* GoogleService-Info.plist in Resources */,
 				9E6DFA2B1E37227000974A59 /* Gotham-Medium.otf in Resources */,
 				9E6DFA2C1E37227000974A59 /* Gotham-Medium.ttf in Resources */,
 				9E6DFA2D1E37227000974A59 /* Gotham-MediumItalic.otf in Resources */,
@@ -505,7 +538,6 @@
 				9E6DFA331E37227000974A59 /* Gotham-ThinItalic.otf in Resources */,
 				9E6DFA341E37227000974A59 /* Gotham-ThinItalic.ttf in Resources */,
 				9E6DF9F91E37212C00974A59 /* ItemTableViewCell.xib in Resources */,
-				9E6DF9FF1E37215900974A59 /* CategoryTableViewCell.xib in Resources */,
 				9E6DF9CA1E37208100974A59 /* LaunchScreen.storyboard in Resources */,
 				9E6DFA461E372FBB00974A59 /* ProfileTableViewCell.xib in Resources */,
 				9E6DF9C71E37208100974A59 /* Assets.xcassets in Resources */,
@@ -675,24 +707,32 @@
 				9E6DF9F41E37210300974A59 /* HomeTableViewController.swift in Sources */,
 				9EA6F1B41E3AF3E100461C12 /* TransferViewController.swift in Sources */,
 				9E6DFA451E372FBB00974A59 /* ProfileTableViewCell.swift in Sources */,
-				9EA6F1A41E39CEE600461C12 /* Item.swift in Sources */,
 				9EA6F1981E387CC400461C12 /* NotificationTableViewCell.swift in Sources */,
 				9EA6F1A11E39C1BD00461C12 /* CategoryTableViewController.swift in Sources */,
 				9E6DF9F81E37212C00974A59 /* ItemTableViewCell.swift in Sources */,
+				9E914D4F1E3C7938008558B0 /* ServiceManager.swift in Sources */,
 				9EA6F1B21E3A7A7B00461C12 /* ServiceViewController.swift in Sources */,
 				9E6DF9BE1E37208100974A59 /* AppDelegate.swift in Sources */,
 				9EA6F1A81E39CF0100461C12 /* Message.swift in Sources */,
 				9EA6F1B81E3B121100461C12 /* HistoryTableViewController.swift in Sources */,
 				9EA6F1911E38537200461C12 /* PostViewController.swift in Sources */,
 				9EA6F1841E37C2E500461C12 /* ProfileViewController.swift in Sources */,
+				9E914D4D1E3C7923008558B0 /* Service.swift in Sources */,
+				9E914D491E3C7450008558B0 /* TransactionManager.swift in Sources */,
 				9EA6F1B61E3B052E00461C12 /* TransferPostViewController.swift in Sources */,
 				9EA6F1951E387C8800461C12 /* NotificationTableViewController.swift in Sources */,
 				9E6DFA3E1E372A8F00974A59 /* PostDetailTableViewController.swift in Sources */,
 				9EA6F1931E38761F00461C12 /* SegmentTableViewController.swift in Sources */,
+				9EA6F1C31E3B293D00461C12 /* Transaction.swift in Sources */,
 				9EA6F1AB1E3A5F9700461C12 /* HistoryTableViewCell.swift in Sources */,
-				9E6DF9FE1E37215900974A59 /* CategoryTableViewCell.swift in Sources */,
+				9EA6F1BF1E3B1E4300461C12 /* UserManager.swift in Sources */,
+				9E914D531E3ED6E0008558B0 /* CategoryTableViewCell.swift in Sources */,
+				9EA6F1C11E3B1E5B00461C12 /* MessageManager.swift in Sources */,
+				9E914D511E3C8327008558B0 /* History.swift in Sources */,
+				9E914D4B1E3C7627008558B0 /* CreditManager.swift in Sources */,
 				9EA6F1A61E39CEF000461C12 /* User.swift in Sources */,
 				9EA6F1AF1E3A6B3800461C12 /* LargeCategoryTableViewCell.swift in Sources */,
+				9E914D451E3BFF94008558B0 /* FriendViewController.swift in Sources */,
 				9EA6F19F1E39804600461C12 /* ChatViewController.swift in Sources */,
 				9E6DFA421E372C0600974A59 /* PostTableViewCell.swift in Sources */,
 			);

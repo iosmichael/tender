@@ -20,5 +20,7 @@ class HistoryTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+    func getHeight()->CGFloat{
+        return 65
+    }
 }

@@ -97,6 +97,12 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
         let (whom, service, type) = tableStructure[(indexPath?.row)!]
         alertStyle()
     }
+    
+    func thumbnailTapped(cell: NotificationTableViewCell) {
+        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "Friend")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension NotificationTableViewController{

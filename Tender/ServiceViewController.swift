@@ -18,7 +18,10 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
         case textLabel
     }
     
+    @IBOutlet weak var buttonHeight: NSLayoutConstraint!
+    
     let bottomGathomFont = UIFont.init(name: "Gotham-Medium", size: 17)
+    var isInfo:Bool = false
     
     var tableStructure = [(cellType.header, "Title"),
                           (cellType.textLabel,"Photoshop/ Video Editing"),
@@ -30,16 +33,16 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if isInfo {
+            buttonHeight.constant = 0
+        }else{
+            buttonHeight.constant = 50
+        }
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
         self.tableView.register(UINib.init(nibName: "ProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "profileCell")
         self.tableView.separatorStyle = .none
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,6 +73,14 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
             let (type, input) = tableStructure[indexPath.row]
             fill(cell: cell as! PostTableViewCell, type: type, input: input)
             return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == tableStructure.count && !isInfo{
+            let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+            let vc = storyBoard.instantiateViewController(withIdentifier: "Friend")
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
@@ -119,6 +130,10 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
         }
     }
 
+    func showButton(show:Bool){
+        isInfo = !show
+        
+    }
     
 
     /*

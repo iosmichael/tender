@@ -26,8 +26,7 @@ class ProfileViewController: UIViewController, SegmentTableDelegate{
         serviceController.segmentDelegate = self
         let ongoingController = SegmentTableViewController()
         ongoingController.segmentDelegate = self
-        let completeController = SegmentTableViewController()
-        completeController.segmentDelegate = self
+        let completeController = HistoryTableViewController()
         allViewControllers = [serviceController,ongoingController,completeController]
         self.cycleFromViewController(oldVC: self.currentViewController, newVC: self.allViewControllers![priorSegmentIndex!], dir: true)
         self.segment.addTarget(self, action: #selector(indexDidChangeForSegmentedControl(sender:)), for: .valueChanged)
@@ -91,16 +90,8 @@ class ProfileViewController: UIViewController, SegmentTableDelegate{
     }
     
     func displayViewController(vc: UIViewController) {
-        self.navigationController?.pushViewController(vc, animated: true)
+        let itemVC = vc as! ServiceViewController
+        itemVC.showButton(show: false)
+        self.navigationController?.pushViewController(itemVC, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
