@@ -14,29 +14,40 @@ class ServiceManager: NSObject {
     
     var ref:FIRDatabaseReference = FIRDatabase.database().reference()
     
-    func getMostRecentServices()->[Service]{
+    func getMostRecentServices(reloadFunc:@escaping (_:[Service])->Void){
         let path = ref.child("services")
-        var services:[Service] = []
         path.queryOrdered(byChild: "date").observe(.value, with: { (snapshot) in
+            var services:[Service] = []
             for child:FIRDataSnapshot in snapshot.children.allObjects as! [FIRDataSnapshot]{
                 let service = self.parseServiceData(child: child)
-                print(service)
                 services.append(service)
             }
+            reloadFunc(services)
         })
-        return services
     }
     
-    func getServicesByCategory(name:String)->[Service]{
+    func getMyServices(uid:String, callback:@escaping (_:[Service])->Void){
         let path = ref.child("services")
-        var services:[Service]?
-        path.queryOrdered(byChild: "category").queryEqual(toValue: name).observe(.childAdded, with: { (snapshot) in
+        path.queryOrdered(byChild: "uid").queryEqual(toValue: uid).observe(.value, with: { (snapshot) in
+            var services:[Service] = []
             for child:FIRDataSnapshot in snapshot.children.allObjects as! [FIRDataSnapshot]{
                 let service = self.parseServiceData(child: child)
-                services?.append(service)
+                services.append(service)
             }
+            callback(services)
         })
-        return services!
+    }
+    
+    func getServicesByCategory(name:String, reloadFunc:@escaping (_:[Service])->Void){
+        let path = ref.child("services")
+        path.queryOrdered(byChild: "category").queryEqual(toValue: "Creative Work").observe(.value, with: { (snapshot) in
+            var services:[Service] = []
+            for child:FIRDataSnapshot in snapshot.children.allObjects as! [FIRDataSnapshot]{
+                let service = self.parseServiceData(child: child)
+                services.append(service)
+            }
+            reloadFunc(services)
+        })
     }
     
     func postService(service:Service){
@@ -67,7 +78,7 @@ class ServiceManager: NSObject {
         let service = Service()
         for elem:FIRDataSnapshot in child.children.allObjects as! [FIRDataSnapshot]{
             switch elem.key{
-            case "uid":
+            case "provider":
                 service.provider = elem.value as! String
                 break
             case "category":
@@ -81,6 +92,9 @@ class ServiceManager: NSObject {
                 break
             case "date":
                 service.date = elem.value as! String
+                break
+            case "thumbnail":
+                service.thumbnail = elem.value as! String
                 break
             case "sets":
                 var skills:[String] = []

@@ -8,19 +8,13 @@
 
 import UIKit
 
-enum TransactionState {
-    case request
-    case pending
-    case affirm
-    case complete
-}
-
 class Transaction: NSObject {
-    var state:String = ""
+    var id: String = ""
+    var state:String = "request"
     var service:String = ""
     var serviceId:String = ""
     var user:String = ""
-    var provider:String = ""
+    var isProvider:Bool = false
     var date:String = ""
     var credit:String = ""
 }

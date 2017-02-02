@@ -7,27 +7,37 @@
 //
 
 import UIKit
+import Firebase
 import Presentr
 
 
 class NotificationTableViewController: UITableViewController,NotificationButtonDelegate{
     
-    var tableStructure = [("Michael Liu","Photoshop",NotificationType.finish),
-                          ("Michael Liu","Photoshop",NotificationType.affirm),
-                          ("Michael Liu","Photoshop",NotificationType.info),
-                          ("Michael Liu","Photoshop",NotificationType.request)]
-   
+    
     let presenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
         presenter.transitionType = TransitionType.coverHorizontalFromRight
         return presenter
     }()
     
+    var uid:String?
+    let transactionManager = TransactionManager()
+    var transactionsList:[Transaction] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if UserDefaults.standard.value(forKey: "uid")==nil {
+            UserManager().updateUser()
+        }
+        uid = UserDefaults.standard.value(forKey: "uid") as! String
+    
         self.tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: "NotiCell")
         self.tableView.separatorStyle = .none
         
+        transactionManager.getTransactions(uid: uid!, reloadFunc:{ data in
+            self.transactionsList = data
+            self.tableView.reloadData()
+        })
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -54,7 +64,7 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return tableStructure.count
+        return transactionsList.count
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -72,30 +82,45 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotiCell", for: indexPath) as! NotificationTableViewCell
+        let transaction = transactionsList[indexPath.row]
         if cell.notificationDelegate == nil {
             cell.notificationDelegate = self
         }
-        let (whom, service, type) = tableStructure[indexPath.row]
-        cell.fillType(whom: whom, service: service, type: type)
+        let (description, type) = parseCellType(transaction: transaction)
+        cell.fillType(description:description, type: type)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let (whom, service, type) = tableStructure[indexPath.row]
         let cell = NotificationTableViewCell()
-        return cell.getCellHeight(whom: whom, service: service, type: type)
+        let transaction = transactionsList[indexPath.row]
+        let (description, type) = parseCellType(transaction: transaction)
+        return cell.getCellHeight(description:description, type: type)
     }
 
     func upperOptionTapped(cell: NotificationTableViewCell) {
         let indexPath = tableView.indexPath(for: cell)
-        let (whom, service, type) = tableStructure[(indexPath?.row)!]
-        alertStyle()
+        let transaction = transactionsList[(indexPath?.row)!]
+        let alert = upperOptionAlert(transaction: transaction, uid: self.uid!)
+        showAlert(alert: alert)
     }
     
     func lowerOptionTapped(cell: NotificationTableViewCell) {
         let indexPath = tableView.indexPath(for: cell)
-        let (whom, service, type) = tableStructure[(indexPath?.row)!]
-        alertStyle()
+        let transaction = transactionsList[(indexPath?.row)!]
+        let alert = lowerOptionAlert(transaction: transaction, uid: self.uid!)
+        showAlert(alert: alert)
+    }
+    
+    func singleOptionTapped(cell: NotificationTableViewCell) {
+        let indexPath = tableView.indexPath(for: cell)
+        let transaction = transactionsList[(indexPath?.row)!]
+        if transaction.state == "request" {
+            let alert = singleOptionAlert(transaction: transaction, uid: self.uid!)
+            showAlert(alert: alert)
+        }else{
+            transactionManager.cancelAction(transaction: transaction, uid: self.uid!)
+        }
     }
     
     func thumbnailTapped(cell: NotificationTableViewCell) {
@@ -103,18 +128,88 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
         let vc = storyBoard.instantiateViewController(withIdentifier: "Friend")
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
 }
 
 extension NotificationTableViewController{
     
-    func customAlertController() -> UIAlertController{
-        let alert = UIAlertController.init(title: "Lorem ipsum", message: "Lorem ipsum dolor sit amet, no vix nemore fierent.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
-        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+    func upperOptionAlert(transaction:Transaction, uid:String)->UIAlertController{
+        let alert = UIAlertController()
+        if transaction.isProvider{
+            switch transaction.state {
+            case "request":
+                alert.title = "Request"
+                alert.message = "\(transaction.service)"
+                alert.addAction(UIAlertAction.init(title: "Accept", style: .default, handler: { (alert) in
+                    self.transactionManager.requestAction(transaction: transaction, isProvider: transaction.isProvider, didAccept: true, uid: uid)
+                }))
+                break
+            case "deliver":
+                alert.title = "Deliver"
+                alert.message = "\(transaction.service)"
+                alert.addAction(UIAlertAction.init(title: "Accept", style: .default, handler: { (alert) in
+                    self.transactionManager.deliverAction(transaction: transaction, isProvider: transaction.isProvider, didComplete: true, uid: uid)
+                }))
+                break
+            default:
+                break
+            }
+        }else{
+            if transaction.state == "finish" {
+                alert.title = "Finish"
+                alert.message = "\(transaction.service)"
+                alert.addAction(UIAlertAction.init(title: "Accept", style: .default, handler: { (alert) in
+                    self.transactionManager.finishAction(transaction: transaction, isProvider: transaction.isProvider, didAccept: true, uid: uid)
+                }))
+            }
+        }
         return alert
     }
     
-    func alertStyle(){
+    func lowerOptionAlert(transaction:Transaction, uid:String)->UIAlertController{
+        let alert = UIAlertController()
+        if transaction.isProvider {
+            switch transaction.state {
+            case "request":
+                alert.title = "Cancel Request"
+                alert.message = "\(transaction.service)"
+                alert.addAction(UIAlertAction.init(title: "Yes", style: .default, handler: { (alert) in
+                    self.transactionManager.cancelAction(transaction: transaction, uid: uid)
+                }))
+                break
+            case "deliver":
+                alert.title = "Cancel Deliver"
+                alert.message = "\(transaction.service)"
+                alert.addAction(UIAlertAction.init(title: "Yes", style: .default, handler: { (alert) in
+                    self.transactionManager.deliverAction(transaction: transaction, isProvider: transaction.isProvider, didComplete: false, uid: uid)
+                }))
+                break
+            default:
+                break
+            }
+        }else{
+            if transaction.state == "finish" {
+                alert.title = "Cancel Finish"
+                alert.message = "\(transaction.service)"
+                alert.addAction(UIAlertAction.init(title: "Yes", style: .default, handler: { (alert) in
+                    self.transactionManager.finishAction(transaction: transaction, isProvider: transaction.isProvider, didAccept: false, uid: uid)
+                }))
+            }
+        }
+        return alert
+    }
+    
+    func singleOptionAlert(transaction:Transaction, uid:String)->UIAlertController{
+        let alert = UIAlertController()
+        alert.title = "Cancel Request"
+        alert.message = "\(transaction.service)"
+        alert.addAction(UIAlertAction.init(title: "OK", style: .destructive, handler: { (alertAction) in
+            self.transactionManager.cancelAction(transaction: transaction, uid: uid)
+        }))
+        return alert
+    }
+    
+    func showAlert(alert:UIAlertController){
         let customPresenter: Presentr = {
             let width = ModalSize.fluid(percentage: 0.50)
             //let height = ModalSize.custom(size: 150)
@@ -129,9 +224,59 @@ extension NotificationTableViewController{
             //customPresenter.backgroundOpacity = 0.5
             return customPresenter
         }()
-        let alert = customAlertController()
         customPresentViewController(customPresenter, viewController: alert, animated: true, completion: nil)
     }
+}
+
+extension NotificationTableViewController{
+    func parseCellType(transaction:Transaction) -> (String, NotificationType) {
+        var description:String = ""
+        let othername = "Michael Liu"
+        
+        if transaction.isProvider {
+            //this is provider alert
+            switch transaction.state {
+            case "request":
+                description = "\(othername) has requested for your help with \(transaction.service)"
+                return (description, NotificationType.double)
+            case "cancel":
+                description = "\(othername) has cancelled request for \(transaction.service)"
+                return (description, NotificationType.single)
+            case "deliver":
+                description = "Did you finish helping \(othername) with \(transaction.service)?"
+                return (description, NotificationType.double)
+            case "finish":
+                description = "Thank you for helping \(othername) with \(transaction.service)"
+                return (description, NotificationType.single)
+            case "refund":
+                description = "\(othername) has requested a refund for your service"
+                return (description, NotificationType.single)
+            default:
+                return ("This is a Wrong Message",NotificationType.singleInfo)
+            }
+        }else{
+            switch transaction.state {
+            case "request":
+                description = "You have requested \(othername) for help with \(transaction.service)"
+                return (description, NotificationType.single)
+            case "cancel":
+                description = "You have cancelled your reuqest for \(transaction.service)"
+                return (description, NotificationType.single)
+            case "deliver":
+                description = "\(othername) has accepted your request for \(transaction.service)"
+                return (description, NotificationType.singleInfo)
+            case "finish":
+                description = "Did \(othername) finished helping you with \(transaction.service)?"
+                return (description, NotificationType.double)
+            case "refund":
+                description = "You have requested a refund for \(transaction.service)"
+                return (description, NotificationType.single)
+            default:
+                return ("This is a Wrong Message",NotificationType.singleInfo)
+            }
+        }
+    }
+    
 }
 
 

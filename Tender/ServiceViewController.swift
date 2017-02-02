@@ -23,13 +23,8 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
     let bottomGathomFont = UIFont.init(name: "Gotham-Medium", size: 17)
     var isInfo:Bool = false
     
-    var tableStructure = [(cellType.header, "Title"),
-                          (cellType.textLabel,"Photoshop/ Video Editing"),
-                          (cellType.header, "Credits"),
-                          (cellType.textLabel,"16 tc."),
-                          (cellType.header, "Skill Sets"),
-                          (cellType.skillset, "Adobe Lightroom"),
-                          (cellType.header,"Provider")]
+    var service:Service?
+    var tableStructure:[(cellType,String)]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +38,7 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
         self.tableView.register(UINib.init(nibName: "ProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "profileCell")
         self.tableView.separatorStyle = .none
+        setupData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,26 +54,28 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //additional one is profile table view cell
-        return tableStructure.count + 1
+        return tableStructure!.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == tableStructure.count {
+        if indexPath.row == tableStructure!.count {
             //profile cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! ProfileTableViewCell
+            cell.fillCell(profile: (service?.provider!)!, email: "michael.liu@my.wheaton.edu")
+            cell.thumbnail.downloadedFrom(link: (service?.thumbnail)!)
             cell.selectionStyle = .none
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
             cell.selectionStyle = .none
-            let (type, input) = tableStructure[indexPath.row]
+            let (type, input) = tableStructure![indexPath.row]
             fill(cell: cell as! PostTableViewCell, type: type, input: input)
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == tableStructure.count && !isInfo{
+        if indexPath.row == tableStructure!.count && !isInfo{
             let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
             let vc = storyBoard.instantiateViewController(withIdentifier: "Friend")
             self.navigationController?.pushViewController(vc, animated: true)
@@ -85,19 +83,41 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == tableStructure.count {
+        if indexPath.row == tableStructure!.count {
             return 65
         }
-        let (type, _) = tableStructure[indexPath.row]
+        let (type, _) = tableStructure![indexPath.row]
         return height(type: type)
     }
     
     @IBAction func getHelpButtonClicked(_ sender: Any) {
         //ASK help button clicked
+        let transaction = Transaction()
+        let uid = "103823706709104189527"
+        transaction.credit = (service?.credits)!
+        transaction.state = "request"
+        transaction.serviceId = "-KbbSE2Pn805dJgh7_af"
+        transaction.isProvider = false
+        transaction.user = "103823706709104189527"
+        transaction.service = (service?.title)!
+        TransactionManager().postTransaction(transaction: transaction, uid: uid)
         print("ask help button clicked")
     }
 
-    
+    func setupData(){
+        let title:String = (service?.title!)!
+        let credit:String = (service?.credits!)!
+        tableStructure = [(cellType.header, "Title"),
+                          (cellType.textLabel,title),
+                          (cellType.header, "Credits"),
+                          (cellType.textLabel,credit),
+                          (cellType.header, "Skill Sets"),
+                          (cellType.header,"Provider")]
+        for item in (service?.skills)!{
+            let skill = (cellType.skillset, item)
+            tableStructure?.insert(skill, at: 5)
+        }
+    }
     
     /*
      case skillset
@@ -134,16 +154,26 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
         isInfo = !show
         
     }
-    
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension UIImageView {
+    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() { () -> Void in
+                self.image = image
+            }
+            }.resume()
     }
-    */
-
+    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloadedFrom(url: url, contentMode: mode)
+    }
 }

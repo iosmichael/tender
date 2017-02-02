@@ -13,10 +13,15 @@ import GoogleSignIn
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
 
+    override init() {
+        super.init()
+        // Firebase Init
+        FIRApp.configure()
+    }
+    
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        FIRApp.configure()
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
         
@@ -43,11 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
             print(error.localizedDescription)
             return
         }
-        
-        let path = FIRDatabase.database().reference().child("users/\(user.userID!)")
-        path.child("name").setValue(user.profile.name!)
-        path.child("email").setValue(user.profile.email!)
-        path.child("thumbnail").setValue(user.profile.imageURL(withDimension: 200).absoluteString)
         
         let authentication = user.authentication
         let credential = FIRGoogleAuthProvider.credential(withIDToken: (authentication?.idToken)!,

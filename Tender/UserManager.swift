@@ -13,17 +13,12 @@ class UserManager: NSObject {
     
     var ref:FIRDatabaseReference = FIRDatabase.database().reference()
     
-    func findUser(uid:String)->User{
+    func findUser(uid:String, callback:@escaping (_:User)->Void){
         let path = self.ref.child("users/\(uid)")
-        let user = User()
         path.observeSingleEvent(of: .value, with: { (snapshot) in
-            let userDict = snapshot.value as? [String : AnyObject] ?? [:]
-            user.credit = userDict["credit"] as! NSInteger?
-            user.uid = uid
-            user.email = userDict["email"] as! String?
-            user.name = userDict["name"] as! String?
+            let user = self.parseUserData(child: snapshot)
+            callback(user)
         })
-        return user
     }
     
     func getHistory(uid:String)->[History]{
@@ -53,5 +48,27 @@ class UserManager: NSObject {
         path.setValue(currentUser?["name"], forKey: "name")
         path.setValue(currentUser?["email"], forKey: "email")
         path.setValue(currentUser?["thumbnail"], forKey: "thumbnail")
+        
+    }
+    
+    func parseUserData(child:FIRDataSnapshot)->User{
+        let user = User()
+        user.uid = child.key
+        for elem:FIRDataSnapshot in child.children.allObjects as! [FIRDataSnapshot]{
+            switch elem.key{
+            case "email":
+                user.email = elem.value as! String
+                break
+            case "name":
+                user.name = elem.value as! String
+                break
+            case "thumbnail":
+                user.thumbnail = elem.value as! String
+                break
+            default:
+                break
+            }
+        }
+        return user
     }
 }

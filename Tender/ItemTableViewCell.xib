@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Gotham-Bold.ttf">
+        <array key="Gotham-Bold.otf">
             <string>Gotham-Bold</string>
         </array>
-        <array key="Gotham-Book.otf">
+        <array key="Gotham-Book.ttf">
             <string>Gotham-Book</string>
         </array>
         <array key="Gotham-Light.ttf">
@@ -57,13 +57,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8t-5D-pAI">
-                        <rect key="frame" x="49" y="12.5" width="24" height="20"/>
-                        <fontDescription key="fontDescription" name="Gotham-Bold" family="Gotham" pointSize="20"/>
+                        <rect key="frame" x="49" y="14.5" width="24" height="17"/>
+                        <fontDescription key="fontDescription" name="Gotham-Bold" family="Gotham" pointSize="17"/>
                         <color key="textColor" red="0.90196078431372551" green="0.63529411764705879" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jan 1, 2017" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lm0-b1-0Jk">
-                        <rect key="frame" x="285.5" y="23.5" width="57.5" height="14"/>
+                        <rect key="frame" x="286" y="23.5" width="57" height="14"/>
                         <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="11"/>
                         <color key="textColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -87,6 +87,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="credit" destination="N8t-5D-pAI" id="Gm8-7G-oza"/>
                 <outlet property="labelDate" destination="Lm0-b1-0Jk" id="Oqo-Rp-H5x"/>
                 <outlet property="provider" destination="QvV-G8-2ue" id="Md8-IY-pbP"/>
                 <outlet property="title" destination="3XV-0v-TNO" id="6rL-xz-s4E"/>

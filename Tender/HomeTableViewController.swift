@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Firebase
 import GoogleSignIn
 
 class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICollectionViewDataSource, UICollectionViewDelegate{
@@ -15,8 +15,8 @@ class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICol
     let categoryReuseStr:String = "CategoryCell"
     let itemReuseStr:String = "ItemCell"
     
-    let listNum = 10
     let categoryList = ["cat1","cat2","cat3"]
+    var services:[Service] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +25,12 @@ class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICol
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().signIn()
         
-        let services = ServiceManager().getMostRecentServices()
-        print(services)
+        ServiceManager().getMostRecentServices(reloadFunc: { data in
+            self.services = data
+            self.tableView.reloadData()
+        })
+
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -51,7 +55,7 @@ class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICol
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : listNum
+        return section == 0 ? 1 : services.count
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -69,7 +73,9 @@ class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICol
             let cell = tableView.dequeueReusableCell(withIdentifier: categoryReuseStr, for: indexPath) as! CategoryTableViewCell
             return cell
         }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: itemReuseStr, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: itemReuseStr, for: indexPath) as! ItemTableViewCell
+            let service = services[indexPath.row]
+            cell.fillCell(title: service.title!, provider: service.provider!, labelDate: service.date!, credit: service.credits!)
             return cell
         }
     }
@@ -80,7 +86,8 @@ class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICol
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            let vc = fetchViewControllerFromMain(withIdentifier: "Service")
+            let vc = fetchViewControllerFromMain(withIdentifier: "Service") as! ServiceViewController
+            vc.service = services[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -111,6 +118,7 @@ class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICol
             categoryCell.setCollectionViewDataSourceDelegate(dataSource: self, delegate: self, indexPath: indexPath)
         }
     }
+    
 }
 
 extension UITableViewController{
@@ -122,10 +130,10 @@ extension UITableViewController{
         let label:UILabel = UILabel.init(frame: CGRect.init(x: leftMargin, y: topMargin, width: UIScreen.main.bounds.width-2*leftMargin, height: height-topMargin))
         label.font = gothamFont
         label.text = input
-        label.textColor = .white
+        label.textColor = UIColor.init(hexString: "27A877")
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: height))
         headerView.addSubview(label)
-        headerView.backgroundColor = UIColor.init(hexString: "27A877")
+        headerView.backgroundColor = .white
         return headerView
     }
     

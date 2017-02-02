@@ -15,6 +15,7 @@ class Service: NSObject {
     var category:String?
     var credits:String?
     var date:String?
+    var thumbnail:String?
 }
 
 extension NSObject{

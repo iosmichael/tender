@@ -9,10 +9,8 @@
 import UIKit
 
 protocol PostCellProtocol {
-    //add credit action
-    func addCredit(cell:PostTableViewCell)
-    //delete credit action
-    func deleteCredit(cell:PostTableViewCell)
+    //update credit action
+    func updateCredit(credit:String)
     //add point from skill btn
     func addPoint(label:String)
     //delete point from skill btn
@@ -20,6 +18,12 @@ protocol PostCellProtocol {
 }
 
 class PostTableViewCell: UITableViewCell {
+    /**
+    * Default Settings
+    */
+    let upperCreditBound = 20
+    let lowerCreditBound = 1
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -170,11 +174,25 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func addCredit(){
-        delegate?.addCredit(cell: self)
+        var credit = Int((textButton.titleLabel?.text)!)!
+        if credit >= upperCreditBound {
+            credit = upperCreditBound
+        }else{
+            credit += 1
+        }
+        textButton.setTitle("\(credit)", for: .normal)
+        delegate?.updateCredit(credit: "\(credit)")
     }
     
     func deleteCredit(){
-        delegate?.deleteCredit(cell: self)
+        var credit = Int((textButton.titleLabel?.text)!)!
+        if credit <= lowerCreditBound {
+            credit = lowerCreditBound
+        }else{
+            credit -= 1
+        }
+        textButton.setTitle("\(credit)", for: .normal)
+        delegate?.updateCredit(credit: "\(credit)")
     }
     
     func addPoint(){

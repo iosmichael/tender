@@ -19,12 +19,17 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
         case textLabel
     }
     
+    var service:Service?
+    
+    let creditIndex = 5
+    let titleIndex = 3
+    let insertIndex = 7
     var tableStructure = [(cellType.header,"Category"),
                           (cellType.textLabel,"Creative Work"),
                           (cellType.header,"Title"),
                           (cellType.inputField,"Photoshop/ Video Editing"),
                           (cellType.header,"Credits"),
-                          (cellType.credits,"16"),
+                          (cellType.credits,"2"),
                           (cellType.header,"Skill Sets"),
                           (cellType.skillsetAdd,"Adobe Photoshop"),
                           (cellType.skillsetDelete,"Web Design"),
@@ -34,7 +39,6 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
         super.viewDidLoad()
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
         self.tableView.separatorStyle = .none
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -126,20 +130,23 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
         }
     }
 
-    func addCredit(cell: PostTableViewCell) {
-        
-    }
-    
-    func deleteCredit(cell: PostTableViewCell) {
-        
+    func updateCredit(credit: String) {
+        tableStructure[creditIndex] = (cellType.credits,credit)
+        print(tableStructure)
     }
     
     func addPoint(label: String) {
-        
+        tableStructure.insert((cellType.skillsetDelete,label), at: insertIndex)
+        print(tableStructure)
+        self.tableView.reloadData()
     }
     
     func deletePoint(cell: PostTableViewCell) {
-        
+        let indexPath = tableView.indexPath(for: cell)
+        print(cell)
+        tableStructure.remove(at: (indexPath?.row)!)
+        print(tableStructure)
+        self.tableView.reloadData()
     }
     
     @IBAction func doneBtnPressed(_ sender: Any) {

@@ -24,8 +24,8 @@ class PostViewController: UIViewController,UICollectionViewDelegate,UICollection
         let layout = UICollectionViewFlowLayout()
         let itemWidth = self.collectionView.frame.size.width/3.1
         let itemHeight = itemWidth * 235 / 130
-        layout.sectionInset = UIEdgeInsets.init(top: 2*itemMargins, left: itemMargins, bottom: 2*itemMargins, right: itemMargins)
-        layout.minimumLineSpacing = 4
+        layout.sectionInset = UIEdgeInsets.init(top: itemMargins, left: itemMargins, bottom: itemMargins, right: 0)
+        layout.minimumLineSpacing = 1.5
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = UICollectionViewScrollDirection.vertical
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)

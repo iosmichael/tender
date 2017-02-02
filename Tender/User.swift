@@ -15,6 +15,7 @@ class User: NSObject {
     var uid:String?
     var credit:NSInteger?
     var email:String?
+    var thumbnail:String?
 }
 
 extension NSObject{
@@ -31,6 +32,9 @@ extension NSObject{
         let data = ["uid": uid!,
                     "provider":name!,
                     "thumbnail":thumbnail!] as [String : String]
+        UserDefaults.standard.setValue(uid, forKey: "uid")
+        UserDefaults.standard.setValue(name, forKey: "name")
+        UserDefaults.standard.setValue(thumbnail, forKey: "thumbnail")
         return data
     }
 }
