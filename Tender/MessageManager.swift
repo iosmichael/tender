@@ -17,11 +17,7 @@ class MessageManager: NSObject {
         let date = Date()
         let dateFormatter = DateFormatter()
         let now = dateFormatter.string(from: date)
-        let currentUser = getCurrentUserData()
-        if currentUser == nil {
-            return
-        }
-        let uid = currentUser?["uid"]!
+        let uid = UserDefaults.standard.value(forKey: "uid") as! String
         let myMPath = ref.child("messages/\(uid)/\(toId)").childByAutoId()
         myMPath.setValue([
             "content":content,
@@ -36,21 +32,16 @@ class MessageManager: NSObject {
             ])
     }
     
-    func getMessages(otherId:String)->[Message]{
-        let currentUser = getCurrentUserData()
-        if currentUser == nil {
-            return []
-        }
-        var messages:[Message]?
-        let uid = currentUser?["uid"]!
+    func getMessages(uid:String, otherId:String, callback:@escaping (_:[Message])->()){
         let myMPath = ref.child("messages/\(uid)/\(otherId)")
-        myMPath.queryOrdered(byChild: "date").queryLimited(toLast: 20).observe(.childAdded, with: { (snapshot) in
+        myMPath.queryOrdered(byChild: "date").queryLimited(toLast: 40).observe(.childAdded, with: { (snapshot) in
+            var messages:[Message] = []
             for child:FIRDataSnapshot in snapshot.children.allObjects as! [FIRDataSnapshot]{
                 let message = self.parseMessageData(child: child)
-                messages?.append(message)
+                messages.append(message)
             }
+            callback(messages)
         })
-        return messages!
     }
     
     func parseMessageData(child:FIRDataSnapshot)->Message{

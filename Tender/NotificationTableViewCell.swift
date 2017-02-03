@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 protocol NotificationButtonDelegate {
     func upperOptionTapped(cell:NotificationTableViewCell)
@@ -60,6 +61,18 @@ class NotificationTableViewCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setAvatarImage(uid:String){
+        let ref = FIRDatabase.database().reference()
+        let path = ref.child("users/\(uid)")
+        path.observeSingleEvent(of: .value, with: { (snapshot) in
+            for elem:FIRDataSnapshot in snapshot.children.allObjects as! [FIRDataSnapshot]{
+                if elem.key == "thumbnail" {
+                    self.avatar.downloadedFrom(link: elem.value as! String)
+                }
+            }
+        })
     }
     
     func fillType(description:String, type:NotificationType){

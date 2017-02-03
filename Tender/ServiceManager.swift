@@ -20,7 +20,7 @@ class ServiceManager: NSObject {
             var services:[Service] = []
             for child:FIRDataSnapshot in snapshot.children.allObjects as! [FIRDataSnapshot]{
                 let service = self.parseServiceData(child: child)
-                services.append(service)
+                services.insert(service, at:0)
             }
             reloadFunc(services)
         })
@@ -76,6 +76,7 @@ class ServiceManager: NSObject {
     
     func parseServiceData(child:FIRDataSnapshot)->Service{
         let service = Service()
+        service.id = child.key
         for elem:FIRDataSnapshot in child.children.allObjects as! [FIRDataSnapshot]{
             switch elem.key{
             case "provider":

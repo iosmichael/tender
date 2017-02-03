@@ -76,7 +76,14 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = fetchViewControllerFromMain(withIdentifier: "Chat")
+        let vc = fetchViewControllerFromMain(withIdentifier: "Chat") as! ChatViewController
+        let sender = User()
+        sender.uid = uid
+        sender.name = UserDefaults.standard.value(forKey: "name") as! String?
+        let other = User()
+        other.uid = transactionsList[indexPath.row].user
+        other.name = "Steve Jobs"
+        vc.setSenderOther(sender: sender, other: other)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -87,6 +94,7 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
             cell.notificationDelegate = self
         }
         let (description, type) = parseCellType(transaction: transaction)
+        cell.setAvatarImage(uid: transaction.user)
         cell.fillType(description:description, type: type)
         return cell
     }
@@ -276,6 +284,7 @@ extension NotificationTableViewController{
             }
         }
     }
+    
     
 }
 

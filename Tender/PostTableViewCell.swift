@@ -15,9 +15,11 @@ protocol PostCellProtocol {
     func addPoint(label:String)
     //delete point from skill btn
     func deletePoint(cell:PostTableViewCell)
+    //update title action
+    func updateTitle(title:String)
 }
 
-class PostTableViewCell: UITableViewCell {
+class PostTableViewCell: UITableViewCell, UITextFieldDelegate {
     /**
     * Default Settings
     */
@@ -93,6 +95,7 @@ class PostTableViewCell: UITableViewCell {
         inputText.frame = textLayout
         inputText.font = gothamMediumLargeFont
         inputText.placeholder = labelStr
+        inputText.delegate = self
         setNeedsLayout()
     }
     
@@ -173,6 +176,10 @@ class PostTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.updateTitle(title: inputText.text!)
+    }
+    
     func addCredit(){
         var credit = Int((textButton.titleLabel?.text)!)!
         if credit >= upperCreditBound {
@@ -200,10 +207,11 @@ class PostTableViewCell: UITableViewCell {
             return
         }
         delegate?.addPoint(label:inputText.text!)
+        inputText.text = ""
     }
     
     func deletePoint(){
         delegate?.deletePoint(cell: self)
     }
-
+    
 }

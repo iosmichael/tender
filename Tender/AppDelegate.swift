@@ -48,6 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
             print(error.localizedDescription)
             return
         }
+        UserDefaults.standard.setValue(user.userID, forKey: "uid")
+        UserDefaults.standard.setValue(user.profile.email, forKey: "email")
+        UserDefaults.standard.setValue(user.profile.imageURL(withDimension: 200).absoluteString, forKey: "thumbnail")
+        UserDefaults.standard.setValue(user.profile.name, forKey: "name")
         
         let authentication = user.authentication
         let credential = FIRGoogleAuthProvider.credential(withIDToken: (authentication?.idToken)!,

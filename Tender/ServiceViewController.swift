@@ -93,11 +93,15 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
     @IBAction func getHelpButtonClicked(_ sender: Any) {
         //ASK help button clicked
         let transaction = Transaction()
-        let uid = "103823706709104189527"
+        if UserDefaults.standard.value(forKey: "uid") == nil{
+            return
+        }
+        let uid = UserDefaults.standard.value(forKey: "uid") as! String
         transaction.credit = (service?.credits)!
         transaction.state = "request"
         transaction.serviceId = "-KbbSE2Pn805dJgh7_af"
         transaction.isProvider = false
+        
         transaction.user = "103823706709104189527"
         transaction.service = (service?.title)!
         TransactionManager().postTransaction(transaction: transaction, uid: uid)
@@ -172,6 +176,28 @@ extension UIImageView {
             }
             }.resume()
     }
+    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloadedFrom(url: url, contentMode: mode)
+    }
+}
+
+extension UIButton {
+    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() { () -> Void in
+                self.setImage(image, for: .normal)
+            }
+            }.resume()
+    }
+
     func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
         downloadedFrom(url: url, contentMode: mode)

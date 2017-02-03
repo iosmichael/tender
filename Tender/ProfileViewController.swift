@@ -6,6 +6,7 @@
 //  Copyright © 2017 Tender llc. All rights reserved.
 //
 
+import GoogleSignIn
 import UIKit
 
 class ProfileViewController: UIViewController, SegmentTableDelegate{
@@ -13,6 +14,8 @@ class ProfileViewController: UIViewController, SegmentTableDelegate{
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var segment: UISegmentedControl!
+    @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var credits: UILabel!
     var currentViewController: UIViewController?
     var allViewControllers: [UIViewController]?
     var priorSegmentIndex: NSInteger?
@@ -34,6 +37,13 @@ class ProfileViewController: UIViewController, SegmentTableDelegate{
     }
 
     func setupThumbnailShadow() {
+        if UserDefaults.standard.value(forKey: "thumbnail") == nil{
+            GIDSignIn.sharedInstance().signIn()
+        }else{
+            thumbnail.downloadedFrom(link: UserDefaults.standard.value(forKey: "thumbnail") as! String)
+            username.text = UserDefaults.standard.value(forKey: "name") as! String
+            
+        }
         thumbnail.layer.shadowColor = UIColor.flatBlack().cgColor
         thumbnail.layer.shadowOpacity = 1
         thumbnail.layer.shadowOffset = CGSize.zero
@@ -94,4 +104,5 @@ class ProfileViewController: UIViewController, SegmentTableDelegate{
         itemVC.showButton(show: false)
         self.navigationController?.pushViewController(itemVC, animated: true)
     }
+    
 }

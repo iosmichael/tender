@@ -13,7 +13,7 @@
         <array key="Gotham-Bold.otf">
             <string>Gotham-Bold</string>
         </array>
-        <array key="Gotham-Book.ttf">
+        <array key="Gotham-Book.otf">
             <string>Gotham-Book</string>
         </array>
         <array key="Gotham-Medium.ttf">
@@ -404,8 +404,10 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
+                        <outlet property="credits" destination="I4G-eV-lLw" id="Trn-kE-W7s"/>
                         <outlet property="segment" destination="LEy-t4-cyp" id="V66-cN-pmM"/>
                         <outlet property="thumbnail" destination="icI-Gq-IQW" id="BRw-RH-YrB"/>
+                        <outlet property="username" destination="A4C-qe-s3j" id="uVc-0I-MQK"/>
                         <outlet property="viewContainer" destination="d4R-dm-DjE" id="khY-xk-Gyh"/>
                     </connections>
                 </viewController>
@@ -654,7 +656,7 @@
             <objects>
                 <navigationController storyboardIdentifier="Post" automaticallyAdjustsScrollViewInsets="NO" id="V5q-UY-3aC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="EiH-DG-gWk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="EiH-DG-gWk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.90196078430000004" green="0.63529411759999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -677,7 +679,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="x1h-bU-dDO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="3aP-2Y-Yvh"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pyx-0g-0T3">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pyx-0g-0T3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -696,7 +698,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Z5Q-tF-KSE" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="VTo-Rh-X8t"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Xzq-9n-ETp">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="Xzq-9n-ETp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.90196078430000004" green="0.63529411759999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -716,7 +718,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ATv-L3-zLN" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="bWn-N0-31b"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="pAf-9G-yfj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="pAf-9G-yfj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.90196078430000004" green="0.63529411759999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -738,7 +740,7 @@
             <objects>
                 <navigationController storyboardIdentifier="Transfer" automaticallyAdjustsScrollViewInsets="NO" id="fYa-Y9-jC2" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2SZ-xm-Zzc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="2SZ-xm-Zzc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -16,6 +16,7 @@ class Service: NSObject {
     var credits:String?
     var date:String?
     var thumbnail:String?
+    var id:String?
 }
 
 extension NSObject{

@@ -23,22 +23,26 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
     
     let creditIndex = 5
     let titleIndex = 3
-    let insertIndex = 7
+    let insertIndex = 8
     var tableStructure = [(cellType.header,"Category"),
                           (cellType.textLabel,"Creative Work"),
                           (cellType.header,"Title"),
                           (cellType.inputField,"Photoshop/ Video Editing"),
                           (cellType.header,"Credits"),
-                          (cellType.credits,"2"),
+                          (cellType.credits,"1"),
                           (cellType.header,"Skill Sets"),
-                          (cellType.skillsetAdd,"Adobe Photoshop"),
-                          (cellType.skillsetDelete,"Web Design"),
-                          (cellType.skillsetDelete,"Adobe Lightroom")]
+                          (cellType.skillsetAdd,"Adobe Photoshop")]
+    
+    var sCredits:String = "1"
+    var destailSets:[String] = []
+    var postTitle:String = "Empty Service"
+    var category:String = "Creative Work"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "postCell")
         self.tableView.separatorStyle = .none
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -54,21 +58,20 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return tableStructure.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "postCell", for: indexPath) as! PostTableViewCell
         cell.selectionStyle = .none
         let (type, input) = tableStructure[indexPath.row]
-        fill(cell: cell as! PostTableViewCell, type: type, input: input)
+        cell.delegate = self
+        fill(cell: cell, type: type, input: input)
         return cell
     }
     
@@ -77,8 +80,13 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
         return height(type: type)
     }
     
-    func summary() -> [String: Any]{
-        return ["":""]
+    func summary() -> Service{
+        let service = Service()
+        service.category = category
+        service.title = postTitle
+        service.credits = sCredits
+        service.skills = destailSets
+        return service
     }
     
     /*
@@ -132,26 +140,30 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
 
     func updateCredit(credit: String) {
         tableStructure[creditIndex] = (cellType.credits,credit)
-        print(tableStructure)
+        self.sCredits = credit
     }
     
     func addPoint(label: String) {
         tableStructure.insert((cellType.skillsetDelete,label), at: insertIndex)
-        print(tableStructure)
+        self.destailSets.append(label)
         self.tableView.reloadData()
     }
     
     func deletePoint(cell: PostTableViewCell) {
         let indexPath = tableView.indexPath(for: cell)
-        print(cell)
         tableStructure.remove(at: (indexPath?.row)!)
-        print(tableStructure)
+        self.destailSets.remove(at: (indexPath?.row)! - insertIndex)
         self.tableView.reloadData()
+    }
+    
+    func updateTitle(title: String) {
+        self.postTitle = title
     }
     
     @IBAction func doneBtnPressed(_ sender: Any) {
         print("Done Btn Pressed")
-        ServiceManager().postService(service:sampleData())
+        ServiceManager().postService(service:summary())
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
         
     func sampleData()->Service{
