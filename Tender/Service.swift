@@ -10,6 +10,8 @@ import UIKit
 
 class Service: NSObject {
     var provider:String?
+    var providerEmail:String?
+    var uid:String?
     var title:String?
     var skills:[String]?
     var category:String?
@@ -30,6 +32,18 @@ extension NSObject{
     func convertStringtoDate(input:String)->Date{
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: input)!
+    }
+    
+    func convertMessageDatetoString(date:Date)->String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        return formatter.string(from: date)
+    }
+    
+    func convertMessageStringtoDate(input:String)->Date{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         return formatter.date(from: input)!
     }
     

@@ -30,7 +30,7 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
                           (cellType.inputField,"Photoshop/ Video Editing"),
                           (cellType.header,"Credits"),
                           (cellType.credits,"1"),
-                          (cellType.header,"Skill Sets"),
+                          (cellType.header,"Bullet Point Details"),
                           (cellType.skillsetAdd,"Adobe Photoshop")]
     
     var sCredits:String = "1"
@@ -165,14 +165,4 @@ class PostDetailTableViewController: UITableViewController, PostCellProtocol {
         ServiceManager().postService(service:summary())
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
-        
-    func sampleData()->Service{
-        let service = Service()
-        service.category = "Creative Work"
-        service.title = "Photoshop"
-        service.credits = "20"
-        service.skills = ["photoshop","web design", "video editing"]
-        return service
-    }
-    
 }

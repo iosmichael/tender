@@ -28,6 +28,7 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationHeader()
         if isInfo {
             buttonHeight.constant = 0
         }else{
@@ -61,7 +62,7 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
         if indexPath.row == tableStructure!.count {
             //profile cell
             let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! ProfileTableViewCell
-            cell.fillCell(profile: (service?.provider!)!, email: "michael.liu@my.wheaton.edu")
+            cell.fillCell(profile: (service?.provider!)!, email: (service?.providerEmail!)!)
             cell.thumbnail.downloadedFrom(link: (service?.thumbnail)!)
             cell.selectionStyle = .none
             return cell
@@ -77,14 +78,19 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == tableStructure!.count && !isInfo{
             let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-            let vc = storyBoard.instantiateViewController(withIdentifier: "Friend")
+            let vc = storyBoard.instantiateViewController(withIdentifier: "Friend") as! FriendViewController
+            let user = User()
+            user.email = service?.providerEmail!
+            user.name = service?.provider!
+            user.thumbnail = service?.thumbnail!
+            vc.user = user
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == tableStructure!.count {
-            return 65
+            return 45
         }
         let (type, _) = tableStructure![indexPath.row]
         return height(type: type)
@@ -97,12 +103,14 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
             return
         }
         let uid = UserDefaults.standard.value(forKey: "uid") as! String
+        let username = UserDefaults.standard.value(forKey: "name") as! String
         transaction.credit = (service?.credits)!
         transaction.state = "request"
-        transaction.serviceId = "-KbbSE2Pn805dJgh7_af"
+        transaction.serviceId = (service?.id!)!
+        transaction.seeker = username
+        transaction.provider = (service?.provider!)!
         transaction.isProvider = false
-        
-        transaction.user = "103823706709104189527"
+        transaction.user = (service?.uid!)!
         transaction.service = (service?.title)!
         TransactionManager().postTransaction(transaction: transaction, uid: uid)
         print("ask help button clicked")
@@ -157,6 +165,15 @@ class ServiceViewController: UIViewController, UITableViewDataSource,UITableView
     func showButton(show:Bool){
         isInfo = !show
         
+    }
+    
+    func setupNavigationHeader(){
+        let imageView = UIImageView.init(image: UIImage.init(named: "logo"))
+        imageView.contentMode = .scaleAspectFit
+        let titleView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 126.88, height: 30))
+        imageView.frame = titleView.frame
+        titleView.addSubview(imageView)
+        self.navigationItem.titleView = titleView
     }
 
 }

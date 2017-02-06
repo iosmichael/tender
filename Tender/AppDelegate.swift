@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import ChameleonFramework
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
@@ -22,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
-        
         // Override point for customization after application launch.
         return true
     }
@@ -52,11 +53,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
         UserDefaults.standard.setValue(user.profile.email, forKey: "email")
         UserDefaults.standard.setValue(user.profile.imageURL(withDimension: 200).absoluteString, forKey: "thumbnail")
         UserDefaults.standard.setValue(user.profile.name, forKey: "name")
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginNotification"), object: nil)
         
         let authentication = user.authentication
         let credential = FIRGoogleAuthProvider.credential(withIDToken: (authentication?.idToken)!,
                                                           accessToken: (authentication?.accessToken)!)
-        
+        let userData = ["email":user.profile.email,
+                        "thumbnail":user.profile.imageURL(withDimension: 200).absoluteString,
+                        "name":user.profile.name]
+        FIRDatabase.database().reference().child("users/\(user.userID!)").setValue(userData)
         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -70,10 +75,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
         let current = FIRAuth.auth()
         do{
             try current?.signOut()
+            UserDefaults.standard.setValue(nil, forKey: "uid")
+            UserDefaults.standard.setValue(nil, forKey: "email")
+            UserDefaults.standard.setValue(nil, forKey: "thumbnail")
+            UserDefaults.standard.setValue(nil, forKey: "name")
         }catch let signOutError as NSError{
             print("Error signing out: %@",signOutError)
         }
-        print(error.localizedDescription)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

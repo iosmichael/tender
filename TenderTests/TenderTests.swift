@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import Tender
 
 class TenderTests: XCTestCase {
     
@@ -22,6 +21,11 @@ class TenderTests: XCTestCase {
     }
     
     func testExample() {
+        for familyName in UIFont.familyNames{
+            for name in UIFont.fontNames(forFamilyName: familyName){
+                print(name)
+            }
+        }
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }

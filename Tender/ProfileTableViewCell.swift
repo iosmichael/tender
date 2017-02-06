@@ -17,6 +17,10 @@ class ProfileTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        profileName.font = UIFont.init(name: "Seravek-Bold", size: 18)
+        email.font = UIFont.init(name: "Seravek-ExtraLight", size: 15)
+        thumbnail.layer.cornerRadius = 35/2
+        thumbnail.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -27,5 +31,11 @@ class ProfileTableViewCell: UITableViewCell {
     func fillCell(profile:String, email:String){
         self.profileName.text = profile
         self.email.text = email
+    }
+    
+    func fillCellWithThumbnail(profile:String, email:String, thumbnailUrl:String){
+        self.profileName.text = profile
+        self.email.text = email
+        self.thumbnail.downloadedFrom(link: thumbnailUrl)
     }
 }

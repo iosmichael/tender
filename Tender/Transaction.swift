@@ -14,6 +14,8 @@ class Transaction: NSObject {
     var service:String = ""
     var serviceId:String = ""
     var user:String = ""
+    var provider:String = ""
+    var seeker:String = ""
     var isProvider:Bool = false
     var date:String = ""
     var credit:String = ""

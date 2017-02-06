@@ -8,34 +8,39 @@
 
 import UIKit
 import Firebase
+import ChameleonFramework
 import GoogleSignIn
 
-class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICollectionViewDataSource, UICollectionViewDelegate{
+class HomeTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate{
 
     let categoryReuseStr:String = "CategoryCell"
     let itemReuseStr:String = "ItemCell"
     
-    let categoryList = ["cat1","cat2","cat3"]
+    let categoryList = [("cat1","Creative Work"),
+                        ("cat2","Professional Work"),
+                        ("cat3","Creative Work")]
     var services:[Service] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationHeader()
         self.tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: categoryReuseStr)
         self.tableView.register(UINib.init(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: itemReuseStr)
-        GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().signIn()
-        
+        GIDSignIn.sharedInstance().signOut()
         ServiceManager().getMostRecentServices(reloadFunc: { data in
             self.services = data
             self.tableView.reloadData()
         })
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserDefaults.standard.value(forKey: "uid") == nil {
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
+            self.present(loginVC, animated: true, completion: nil)
+        }
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     @IBAction func addService(_ sender: Any) {
@@ -98,13 +103,16 @@ class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = CategoryTableViewController()
+        let (_, categoryName) = categoryList[indexPath.row]
+        vc.category = categoryName
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath)
         let imageView = UIImageView.init(frame: cell.contentView.bounds)
-        imageView.image = UIImage.init(named: categoryList[indexPath.item])
+        let (imageName, _) = categoryList[indexPath.item]
+        imageView.image = UIImage.init(named: imageName)
         imageView.layer.cornerRadius = 5
         imageView.clipsToBounds = true
         //add image and button here
@@ -119,6 +127,18 @@ class HomeTableViewController: UITableViewController, GIDSignInUIDelegate, UICol
         }
     }
     
+    func setupNavigationHeader(){
+        let imageView = UIImageView.init(image: UIImage.init(named: "logo"))
+        imageView.contentMode = .scaleAspectFit
+        let titleView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 126.88, height: 30))
+        imageView.frame = titleView.frame
+        titleView.addSubview(imageView)
+        self.navigationItem.titleView = titleView
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(gradientStyle: .topToBottom, withFrame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 64), andColors: [UIColor.init(hexString: "FDD155"),UIColor.init(hexString: "E2A602")])
+    }
+    
 }
 
 extension UITableViewController{
@@ -126,11 +146,11 @@ extension UITableViewController{
         let height:CGFloat = 45
         let leftMargin:CGFloat = 15
         let topMargin:CGFloat = 15
-        let gothamFont:UIFont = UIFont.init(name: "Gotham-Medium", size: 30)!
+        let gothamFont:UIFont = UIFont.init(name: "Seravek-Bold", size: 30)!
         let label:UILabel = UILabel.init(frame: CGRect.init(x: leftMargin, y: topMargin, width: UIScreen.main.bounds.width-2*leftMargin, height: height-topMargin))
         label.font = gothamFont
         label.text = input
-        label.textColor = UIColor.init(hexString: "27A877")
+        label.textColor = UIColor.init(hexString: "26A976")
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: height))
         headerView.addSubview(label)
         headerView.backgroundColor = .white
@@ -143,4 +163,3 @@ extension UITableViewController{
         return vc
     }
 }
-

@@ -16,21 +16,27 @@ class SegmentTableViewController: UITableViewController {
 
     var segmentDelegate:SegmentTableDelegate?
     var services:[Service] = []
+    var uid:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UINib.init(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "itemCell")
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        ServiceManager().getMyServices(uid: UserDefaults.standard.value(forKey: "uid") as! String, callback: { data in
+        if uid == nil {
+            uid = UserDefaults.standard.value(forKey: "uid") as! String
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        uid = UserDefaults.standard.value(forKey: "uid") as! String
+        ServiceManager().getMyServices(uid: uid!, callback: { data in
             self.services = data
             self.tableView.reloadData()
         })
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {

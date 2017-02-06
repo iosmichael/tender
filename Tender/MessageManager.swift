@@ -15,8 +15,7 @@ class MessageManager: NSObject {
     
     func sendMessage(toId:String, content:String){
         let date = Date()
-        let dateFormatter = DateFormatter()
-        let now = dateFormatter.string(from: date)
+        let now = convertMessageDatetoString(date: date)
         let uid = UserDefaults.standard.value(forKey: "uid") as! String
         let myMPath = ref.child("messages/\(uid)/\(toId)").childByAutoId()
         myMPath.setValue([
@@ -34,7 +33,7 @@ class MessageManager: NSObject {
     
     func getMessages(uid:String, otherId:String, callback:@escaping (_:[Message])->()){
         let myMPath = ref.child("messages/\(uid)/\(otherId)")
-        myMPath.queryOrdered(byChild: "date").queryLimited(toLast: 40).observe(.childAdded, with: { (snapshot) in
+        myMPath.queryLimited(toLast: 40).observe(.value, with: { (snapshot) in
             var messages:[Message] = []
             for child:FIRDataSnapshot in snapshot.children.allObjects as! [FIRDataSnapshot]{
                 let message = self.parseMessageData(child: child)
@@ -46,18 +45,16 @@ class MessageManager: NSObject {
     
     func parseMessageData(child:FIRDataSnapshot)->Message{
         let message = Message()
-        let dateFormatter = DateFormatter()
         for elem:FIRDataSnapshot in child.children.allObjects as! [FIRDataSnapshot]{
             switch elem.key {
             case "content":
                 message.content = elem.value as? String
                 break
             case "date":
-                message.date = dateFormatter.date(from:elem.value as! String)
+                message.date = convertMessageStringtoDate(input: (elem.value as! String))
                 break
             case "isMe":
-                let isMe = elem.value as! String
-                message.isMe = Bool(isMe)
+                message.isMe = elem.value as! String
                 break
             default:
                 break

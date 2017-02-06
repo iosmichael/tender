@@ -17,25 +17,32 @@ class CreditManager: NSObject {
     
     //there might be concurrent problems
     public func addCredit(uid:String, by:NSInteger){
-        var credit = getCredit(uid: uid)
-        credit += by
-        setCredit(uid: uid, with: credit)
+        getCredit(uid: uid, callback:{ (data) in
+            var credit = data
+            credit += by
+            self.setCredit(uid: uid, with: credit)
+        })
     }
     
     public func deleteCredit(uid:String, by:NSInteger){
-        var credit = getCredit(uid: uid)
-        credit += by
-        setCredit(uid: uid, with: credit)
+        getCredit(uid: uid, callback:{ (data) in
+            var credit = data
+            credit -= by
+            self.setCredit(uid: uid, with: credit)
+        })
     }
     
-    func getCredit(uid:String)->NSInteger{
-        let creditPath = self.ref.child("users/\(uid)")
-        let credit = creditPath.value(forKey: "credits") as! String?
-        if credit == nil {
-            creditPath.child("credits").setValue(defaultCredit)
-            return Int(defaultCredit)!
-        }
-        return Int(credit!)!
+    func getCredit(uid:String, callback:@escaping (_:NSInteger)->Void){
+        let creditPath = self.ref.child("users/\(uid)/credit")
+        creditPath.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value
+            if value is NSNull {
+                creditPath.setValue(self.defaultCredit)
+                callback(Int(self.defaultCredit)!)
+            }else{
+                callback(Int(value as! String)!)
+            }
+        })
     }
     
     func setCredit(uid:String, with:NSInteger){

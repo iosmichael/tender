@@ -10,7 +10,6 @@ import UIKit
 import Firebase
 import Presentr
 
-
 class NotificationTableViewController: UITableViewController,NotificationButtonDelegate{
     
     
@@ -26,25 +25,23 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationHeader()
         if UserDefaults.standard.value(forKey: "uid")==nil {
             UserManager().updateUser()
         }
-        uid = UserDefaults.standard.value(forKey: "uid") as! String
-    
         self.tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: "NotiCell")
         self.tableView.separatorStyle = .none
-        
-        transactionManager.getTransactions(uid: uid!, reloadFunc:{ data in
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        uid = UserDefaults.standard.value(forKey: "uid") as! String
+        TransactionManager().getTransactions(uid: uid!, reloadFunc:{ data in
             self.transactionsList = data
             self.tableView.reloadData()
         })
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
     @IBAction func transferPop(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Transfer")
@@ -81,9 +78,16 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
         sender.uid = uid
         sender.name = UserDefaults.standard.value(forKey: "name") as! String?
         let other = User()
+        let transaction = transactionsList[indexPath.row]
         other.uid = transactionsList[indexPath.row].user
-        other.name = "Steve Jobs"
+        if transaction.isProvider {
+            other.name = transaction.seeker
+        }else{
+            other.name = transaction.provider
+        }
         vc.setSenderOther(sender: sender, other: other)
+        let notiCell = self.tableView(tableView, cellForRowAt: indexPath) as! NotificationTableViewCell
+        vc.avatar = notiCell.avatar.image(for: .normal)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -133,7 +137,9 @@ class NotificationTableViewController: UITableViewController,NotificationButtonD
     
     func thumbnailTapped(cell: NotificationTableViewCell) {
         let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "Friend")
+        let vc = storyBoard.instantiateViewController(withIdentifier: "Friend") as! FriendViewController
+        let user = User()
+        vc.user = user
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -220,7 +226,6 @@ extension NotificationTableViewController{
     func showAlert(alert:UIAlertController){
         let customPresenter: Presentr = {
             let width = ModalSize.fluid(percentage: 0.50)
-            //let height = ModalSize.custom(size: 150)
             let height = ModalSize.fluid(percentage: 0.20)
             let center = ModalCenterPosition.customOrigin(origin: CGPoint(x: 0, y: 0))
             let customType = PresentationType.custom(width: width, height: height, center: center)
@@ -228,21 +233,30 @@ extension NotificationTableViewController{
             customPresenter.transitionType = .coverVerticalFromTop
             customPresenter.dismissTransitionType = .crossDissolve
             customPresenter.roundCorners = false
-            //customPresenter.backgroundColor = UIColor.flatWhite()
-            //customPresenter.backgroundOpacity = 0.5
             return customPresenter
         }()
         customPresentViewController(customPresenter, viewController: alert, animated: true, completion: nil)
+    }
+    
+    func setupNavigationHeader(){
+        let imageView = UIImageView.init(image: UIImage.init(named: "logo"))
+        imageView.contentMode = .scaleAspectFit
+        let titleView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 126.88, height: 30))
+        imageView.frame = titleView.frame
+        titleView.addSubview(imageView)
+        self.navigationItem.titleView = titleView
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(gradientStyle: .topToBottom, withFrame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 64), andColors: [UIColor.init(hexString: "FDD155"),UIColor.init(hexString: "E2A602")])
     }
 }
 
 extension NotificationTableViewController{
     func parseCellType(transaction:Transaction) -> (String, NotificationType) {
         var description:String = ""
-        let othername = "Michael Liu"
-        
         if transaction.isProvider {
             //this is provider alert
+            let othername = transaction.seeker
             switch transaction.state {
             case "request":
                 description = "\(othername) has requested for your help with \(transaction.service)"
@@ -263,6 +277,7 @@ extension NotificationTableViewController{
                 return ("This is a Wrong Message",NotificationType.singleInfo)
             }
         }else{
+            let othername = transaction.provider
             switch transaction.state {
             case "request":
                 description = "You have requested \(othername) for help with \(transaction.service)"

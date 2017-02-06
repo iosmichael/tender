@@ -33,10 +33,10 @@ class PostTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     var delegate: PostCellProtocol?
     
-    let gothamMediumExtraLarge = UIFont.init(name: "Gotham-Medium", size: 40)
-    let gothamMediumLargeFont = UIFont.init(name: "Gotham-Medium", size: 22)
-    let gothamMediumFont = UIFont.init(name: "Gotham-Medium", size: 18)
-    let gothamBookFont = UIFont.init(name: "Gotham-Book", size: 15)
+    let gothamMediumExtraLarge = UIFont.init(name: "Seravek-Bold", size: 40)
+    let gothamMediumLargeFont = UIFont.init(name: "Seravek-Bold", size: 22)
+    let gothamMediumFont = UIFont.init(name: "Seravek-Bold", size: 18)
+    let gothamBookFont = UIFont.init(name: "Seravek-ExtraLight", size: 15)
     
     let leftMargin:CGFloat = 20
     let topMargin:CGFloat = 5

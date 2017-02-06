@@ -21,6 +21,24 @@ class UserManager: NSObject {
         })
     }
     
+    func getUsers(query:String, callback:@escaping (_:[User])->Void){
+        let path = self.ref.child("users")
+        var dataQuery:FIRDatabaseQuery?
+        if query.isEmpty {
+            dataQuery = path.queryLimited(toFirst: 10)
+        }else{
+            dataQuery = path.queryStarting(atValue: query, childKey: "name").queryLimited(toFirst: 10)
+        }
+        dataQuery?.observe(.value, with: { (snapshot) in
+            var users:[User] = []
+            for child in snapshot.children.allObjects as! [FIRDataSnapshot]{
+                let user = self.parseUserData(child: child)
+                users.insert(user, at: 0)
+            }
+            callback(users)
+        })
+    }
+    
     func getHistory(uid:String)->[History]{
         let path = self.ref.child("users/\(uid)/complete")
         

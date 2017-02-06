@@ -18,6 +18,10 @@ class ItemTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        title.font = UIFont.init(name: "Seravek-Bold", size: 15)
+        provider.font = UIFont.init(name: "Seravek-ExtraLight", size: 11)
+        labelDate.font = UIFont.init(name: "Seravek-ExtraLight", size: 11)
+        credit.font = UIFont.init(name: "Seravek-Bold", size: 20)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -21,7 +21,7 @@ class TransactionManager: NSObject {
             var transactions:[Transaction] = []
             for child:FIRDataSnapshot in snapshot.children.allObjects as! [FIRDataSnapshot]{
                 let transaction = self.parseTransaction(child: child)
-                transactions.append(transaction)
+                transactions.insert(transaction,at: 0)
             }
             reloadFunc(transactions)
         })
@@ -123,6 +123,12 @@ class TransactionManager: NSObject {
             case "user":
                 transaction.user = elem.value as! String
                 break
+            case "provider":
+                transaction.provider = elem.value as! String
+                break
+            case "seeker":
+                transaction.seeker = elem.value as! String
+                break
             case "isProvider":
                 transaction.isProvider = elem.value as! String == "true"
                 break
@@ -183,6 +189,8 @@ class TransactionManager: NSObject {
                         "state":transaction.state,
                         "serviceId":transaction.serviceId,
                         "date":date,
+                        "provider":transaction.provider,
+                        "seeker":transaction.seeker,
                         "credit":transaction.credit,
                         "isProvider":"\(transaction.isProvider)"]
         myPath.setValue(dataDict)

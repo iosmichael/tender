@@ -12,5 +12,5 @@ class Message: NSObject {
     var content:String?
     var other:User?
     var date:Date?
-    var isMe:Bool?
+    var isMe:String?
 }

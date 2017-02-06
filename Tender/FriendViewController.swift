@@ -8,30 +8,44 @@
 
 import UIKit
 
-class FriendViewController: UIViewController, SegmentTableDelegate {
+class FriendViewController: UIViewController {
 
     @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet weak var email: UILabel!
+    @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var viewContainer: UIView!
-    @IBOutlet weak var segment: UISegmentedControl!
+    
+    
     var currentViewController: UIViewController?
     var allViewControllers: [UIViewController]?
     var priorSegmentIndex: NSInteger?
     
+    var friendId:String?
+    var user:User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupThumbnailShadow()
-        self.segment.selectedSegmentIndex = 0
         priorSegmentIndex = 0
         let serviceController = SegmentTableViewController()
-        serviceController.segmentDelegate = self
+        if friendId != nil {
+            serviceController.uid = friendId
+        }
         let completeController = HistoryTableViewController()
         allViewControllers = [serviceController,completeController]
         self.cycleFromViewController(oldVC: self.currentViewController, newVC: self.allViewControllers![priorSegmentIndex!], dir: true)
-        self.segment.addTarget(self, action: #selector(indexDidChangeForSegmentedControl(sender:)), for: .valueChanged)
+        
         // Do any additional setup after loading the view.
     }
     
     func setupThumbnailShadow() {
+        profileName.font = UIFont.init(name: "Seravek-Bold", size: 20)
+        email.font = UIFont.init(name: "Seravek-ExtraLight", size: 17)
+        if user != nil{
+            self.profileName.text = user?.name!
+            self.email.text = user?.email!
+            self.thumbnail.downloadedFrom(link: (user?.thumbnail!)!)
+        }
         thumbnail.layer.shadowColor = UIColor.flatBlack().cgColor
         thumbnail.layer.shadowOpacity = 1
         thumbnail.layer.shadowOffset = CGSize.zero
@@ -72,19 +86,6 @@ class FriendViewController: UIViewController, SegmentTableDelegate {
             newVC.didMove(toParentViewController: self)
             self.currentViewController = newVC
         }
-    }
-    
-    func indexDidChangeForSegmentedControl(sender:UISegmentedControl){
-        let index = sender.selectedSegmentIndex
-        if UISegmentedControlNoSegment != index {
-            var direction = false;
-            if priorSegmentIndex! < index {
-                direction = true
-            }
-            let incomingVC = self.allViewControllers?[index]
-            self.cycleFromViewController(oldVC: self.currentViewController, newVC: incomingVC!, dir: direction)
-        }
-        priorSegmentIndex = index
     }
     
     func displayViewController(vc: UIViewController) {

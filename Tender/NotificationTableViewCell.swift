@@ -25,7 +25,7 @@ enum NotificationType{
 class NotificationTableViewCell: UITableViewCell {
 
     var notificationDelegate:NotificationButtonDelegate?
-    
+
     var upperOption:UIButton = UIButton()
     var lowerOption:UIButton = UIButton()
     var singleOption:UIButton = UIButton()
@@ -35,7 +35,7 @@ class NotificationTableViewCell: UITableViewCell {
     
     var cellType:NotificationType?
     
-    let gothamFont:UIFont = UIFont.init(name: "Gotham-Book", size: 16)!
+    let gothamFont:UIFont = UIFont.init(name: "Seravek-ExtraLight", size: 19)!
     let defaultHeight:CGFloat = 75 // default cell height
     let smallSquare:CGFloat = 30
     let topMargin:CGFloat = 8  // also the gap between label and buttons

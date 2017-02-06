@@ -14,6 +14,7 @@ class ChatViewController: JSQMessagesViewController {
     
     var currentUser:User?
     var otherUser:User?
+    var avatar:UIImage?
     
     var messages = [JSQMessage]()
     
@@ -62,7 +63,10 @@ class ChatViewController: JSQMessagesViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         let message = messages[indexPath.row]
         if currentUser!.uid != message.senderId {
-            return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage.init(named: "profile-test"), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            if avatar == nil {
+                return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage.init(named: "profile-test"), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            }
+            return JSQMessagesAvatarImageFactory.avatarImage(with: avatar, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
         }else{
             return nil
         }
@@ -102,35 +106,23 @@ class ChatViewController: JSQMessagesViewController {
             self.messages = messages
             self.collectionView.reloadData()
         }
-        
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
 extension ChatViewController{
     func getMessages(uid:String, username:String, otherId:String, othername:String, callback:@escaping (_:[JSQMessage])->Void){
-        var jsqMessages = [JSQMessage]()
         let manager = MessageManager()
         manager.getMessages(uid: uid, otherId: otherId) { (messages) in
+            var jsqMessages = [JSQMessage]()
             for message in messages{
                 var jsqMessage:JSQMessage?
-                if message.isMe! {
+                if message.isMe == "true" {
                     jsqMessage = JSQMessage(senderId:uid, displayName:username, text:message.content!)
                 }else{
                     jsqMessage = JSQMessage(senderId:otherId, displayName:othername, text:message.content!)

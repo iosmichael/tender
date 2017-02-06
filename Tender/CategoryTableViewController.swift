@@ -11,10 +11,15 @@ import UIKit
 class CategoryTableViewController: UITableViewController {
 
     var services:[Service] = []
+    var category:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UINib.init(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ItemCell")
-        ServiceManager().getServicesByCategory(name: "Creative Work", reloadFunc:{ data in
+        
+        if category == nil {
+            category = "Creative Work"
+        }
+        ServiceManager().getServicesByCategory(name: category!, reloadFunc:{ data in
             self.services = data
             self.tableView.reloadData()
         })
@@ -45,7 +50,10 @@ class CategoryTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerView(input: "Creative Work")
+        if category == nil {
+            headerView(input: "Creative Work")
+        }
+        return headerView(input: category!)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
